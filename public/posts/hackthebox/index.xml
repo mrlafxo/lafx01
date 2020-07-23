@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>lafx0</title>
-    <link>/</link>
-    <description>Recent content on lafx0</description>
+    <title>Hack The Box write-ups on lafx0</title>
+    <link>/posts/hackthebox/</link>
+    <description>Recent content in Hack The Box write-ups on lafx0</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jul 2020 16:04:02 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2020 16:09:26 +0100</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/posts/hackthebox/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -63,16 +63,6 @@ sudo nmap -sT -sV -n 10.10.10.75 -oA nmap/sT_SV_scan Starting Nmap 7.80 ( https:
     </item>
     
     <item>
-      <title>Introduction</title>
-      <link>/posts/overthewire/introduction/</link>
-      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/overthewire/introduction/</guid>
-      <description>Here I will post my personal write ups about my journey through Over the Wire levels.
-I will start with Bandit and with more basic challenges.</description>
-    </item>
-    
-    <item>
       <title>Jerry</title>
       <link>/posts/hackthebox/jerry/</link>
       <pubDate>Thu, 25 Jun 2020 16:04:02 +0100</pubDate>
@@ -80,20 +70,6 @@ I will start with Bandit and with more basic challenges.</description>
       <guid>/posts/hackthebox/jerry/</guid>
       <description>Machine info  OS : Windows Difficulty : Easy Points : 20 IP : 10.10.10.95  Mind Map Reconnaisance I start with the usual initial scan to check for useful open ports:
 Nmap scan report for 10.10.10.95 Host is up (0.078s latency). Not shown: 999 filtered ports PORT STATE SERVICE 8080/tcp open http-proxy Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Aggressive OS guesses: Microsoft Windows Server 2012 or Windows Server 2012 R2 (91%), Microsoft Windows Server 2012 R2 (91%), Microsoft Windows Server 2012 (90%), Microsoft Windows 7 Professional (87%), Microsoft Windows 8.</description>
-    </item>
-    
-    <item>
-      <title>Level 0</title>
-      <link>/posts/overthewire/level0/</link>
-      <pubDate>Mon, 30 Mar 2020 18:50:25 +0200</pubDate>
-      
-      <guid>/posts/overthewire/level0/</guid>
-      <description>Level Goal
-The goal of this level is for you to log into the game using SSH. The host to which you need to connect is bandit.labs.overthewire.org, on port 2220. The username is bandit0 and the password is bandit0.
-Once logged in, go to the Level 1 page to find out how to beat Level 1.
-Short Lesson
-What is SSH?
- Secure Shell (SSH) is a cryptographic network protocol for operating network services securely over an unsecured network.</description>
     </item>
     
     <item>
@@ -108,19 +84,6 @@ Nmap scan report for 10.10.10.5 Host is up (0.075s latency). Not shown: 998 filt
     </item>
     
     <item>
-      <title>Level 0 -&gt; Level 1</title>
-      <link>/posts/overthewire/level01/</link>
-      <pubDate>Wed, 06 May 2020 17:25:41 +0200</pubDate>
-      
-      <guid>/posts/overthewire/level01/</guid>
-      <description>Level Goal
-The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
-Short Lesson
-Useful commands:
- The &amp;lsquo;ls&amp;rsquo; command displays a list of names of all files in the current directory.</description>
-    </item>
-    
-    <item>
       <title>Blue</title>
       <link>/posts/hackthebox/blue/</link>
       <pubDate>Fri, 26 Jun 2020 16:04:02 +0100</pubDate>
@@ -128,20 +91,6 @@ Useful commands:
       <guid>/posts/hackthebox/blue/</guid>
       <description>Machine info  OS : Windows Difficulty : Easy Points : 20 IP : 10.10.10.40  Mind Map Reconnaisance I start with an initial scan, including the -sC option which will run also the default scripts:
 sudo nmap -sC -sV -O 10.10.10.40 -n -oA nmap/initial Nmap scan report for 10.10.10.40 Host is up (0.073s latency). Not shown: 991 closed ports PORT STATE SERVICE VERSION 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds Windows 7 Professional 7601 Service Pack 1 microsoft-ds (workgroup: WORKGROUP) 49152/tcp open msrpc Microsoft Windows RPC 49153/tcp open msrpc Microsoft Windows RPC 49154/tcp open msrpc Microsoft Windows RPC 49155/tcp open msrpc Microsoft Windows RPC 49156/tcp open msrpc Microsoft Windows RPC 49157/tcp open msrpc Microsoft Windows RPC No exact OS matches for host (If you know what OS is running on it, see https://nmap.</description>
-    </item>
-    
-    <item>
-      <title>Level 1 -&gt; Level 2</title>
-      <link>/posts/overthewire/level02/</link>
-      <pubDate>Wed, 06 May 2020 17:26:01 +0200</pubDate>
-      
-      <guid>/posts/overthewire/level02/</guid>
-      <description>Level Goal
-The password for the next level is stored in a file called - located in the home directory.
-Short Lesson
- Every command in Linux may be followed by one or more options. An options is passed to a command with the &#39; - &#39; character.
-  For example, to also list all the hidden files in the current directory, we can use:
-  ls -a  Solution We may be tempted to simply enter the following:</description>
     </item>
     
     <item>
