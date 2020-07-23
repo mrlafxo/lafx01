@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2020-06-26T16:04:02+01:00
 title = "Blue"
 description = ""
@@ -286,4 +286,4 @@ And I am already **SYSTEM**! No privilege escalation is needed!
 
 ## Lessons learned and remediations
 
-- The machine was not patched against the well know **EternalBlue** exploit, also known as **MS17-010**. The administrator should have updated the machine. 
+- The machine was not patched against the well know **EternalBlue** exploit, also known as **MS17-010**. The administrator should have updated the machine.

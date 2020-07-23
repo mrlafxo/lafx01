@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2020-06-28T16:04:02+01:00
 title = "Legacy"
 description = ""
@@ -250,4 +250,4 @@ I'm already **SYSTEM**, so there is no need to proceed with privilege escalation
 
 ## Lessons learned and remediations
 
-- The target system appears to be vulnerable to 2 well known vulnerabilities. The administrator should have patched the system against this well known type of attacks. 
+- The target system appears to be vulnerable to 2 well known vulnerabilities. The administrator should have patched the system against this well known type of attacks.

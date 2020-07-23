@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2020-07-04T16:04:02+01:00
 title = "Blunder"
 description = ""
@@ -303,4 +303,4 @@ uid=0(root) gid=1001(hugo) groups=1001(hugo)
 
 - The blog was not patched against the public known vulnerability for **Bludit version 3.9.2**. The administrator should have upgraded the service to a more secure version.
 - Thanks to the `todo.txt` file left on the server by the developers I was able to retrieve a valid user and bruteforce the login. This should not happen and all the sensible configuration files and notes should be stored in a safe place.
-- There are always different ways to do things. Tools are here for our advantage but it is really important to understand what we're doing before launching random attacks. In this case `dirsearch` and `wfuzz` were both indispensable to find our way in, but I could have found the same results using only one of them. Also, `cewl` was very useful because the login password was not present in the common wordlists I'm using. 
+- There are always different ways to do things. Tools are here for our advantage but it is really important to understand what we're doing before launching random attacks. In this case `dirsearch` and `wfuzz` were both indispensable to find our way in, but I could have found the same results using only one of them. Also, `cewl` was very useful because the login password was not present in the common wordlists I'm using.

@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2020-07-22T16:04:02+01:00
 title = "Remote"
 description = ""
@@ -231,4 +231,4 @@ nt authority\system
 ## Lessons learned and remediations
 
 - The webserver Administrator should not have exposed a mount share publicly. It was the first step which made possible to identify admin credentials for the application. Only expose what is striclty necessary!
-- A low privilged user was able to manipulate a process running as Local System. This is a security misconfiguration and should be fixed as soon as possible. 
+- A low privilged user was able to manipulate a process running as Local System. This is a security misconfiguration and should be fixed as soon as possible.
