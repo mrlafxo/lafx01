@@ -88,6 +88,16 @@
   </url>
   
   <url>
+    <loc>/about/info/</loc>
+    <lastmod>2020-03-05T16:27:35+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+    <lastmod>2020-03-05T16:27:35+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/posts/hackthebox/</loc>
     <lastmod>2020-03-05T16:09:26+01:00</lastmod>
   </url>
@@ -95,6 +105,16 @@
   <url>
     <loc>/posts/overthewire/</loc>
     <lastmod>2020-03-05T16:09:26+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/topic2/</loc>
+    <lastmod>2020-03-05T16:00:48+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/topic1/</loc>
+    <lastmod>2020-03-05T16:00:48+01:00</lastmod>
   </url>
   
   <url>

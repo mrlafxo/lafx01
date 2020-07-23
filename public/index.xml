@@ -174,5 +174,35 @@ sudo nmap -sC -sV -n 10.10.10.191 -oA nmap/initial Nmap scan report for 10.10.10
 sudo nmap -n 10.10.10.180 -sV Nmap scan report for 10.10.10.180 Host is up (0.076s latency). Not shown: 993 closed ports PORT STATE SERVICE VERSION 21/tcp open ftp Microsoft ftpd 80/tcp open http Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) 111/tcp open rpcbind 2-4 (RPC #100000) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds?</description>
     </item>
     
+    <item>
+      <title>About</title>
+      <link>/about/info/</link>
+      <pubDate>Thu, 05 Mar 2020 16:27:35 +0100</pubDate>
+      
+      <guid>/about/info/</guid>
+      <description>I&amp;rsquo;m a Computer Engineer affected with everything concerning Linux and IT Security.
+A list of things I like:
+ Chess Literature People with values  A list of things I don&amp;rsquo;t like:
+ Musicals Photographers People who don&amp;rsquo;t know how to listen  </description>
+    </item>
+    
+    <item>
+      <title>Hack The Box write-ups</title>
+      <link>/posts/topic2/</link>
+      <pubDate>Thu, 05 Mar 2020 16:00:48 +0100</pubDate>
+      
+      <guid>/posts/topic2/</guid>
+      <description>This are the topics</description>
+    </item>
+    
+    <item>
+      <title>Over The Wire write-ups</title>
+      <link>/posts/topic1/</link>
+      <pubDate>Thu, 05 Mar 2020 16:00:48 +0100</pubDate>
+      
+      <guid>/posts/topic1/</guid>
+      <description>This are the topics</description>
+    </item>
+    
   </channel>
 </rss>
