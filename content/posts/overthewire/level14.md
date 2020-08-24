@@ -26,7 +26,7 @@ Note: localhost is a hostname that refers to the machine you are working on.
 > Public key authentication is more secure than password authentication.
 With public key authentication, the authenticating entity has a **public key** and a **private key**. Each key is a large number with special mathematical properties. The private key is kept on the computer you log in from, while the public key is stored on the **.ssh/authorized_keys** file on all the computers you want to log in to. When you log in to a computer, the SSH server uses the public key to "lock" messages in a way that can only be "unlocked" by your private key - this means that even the most resourceful attacker can't snoop on, or interfere with, your session. As an extra security measure, most SSH programs store the private key in a passphrase-protected format, so that if your computer is stolen or broken in to, you should have enough time to disable your old public key before they break the passphrase and start using your key.
 
-**->** This link has a full explanation of the argument.
+**->** This link has a full explanation of the argument: https://help.ubuntu.com/community/SSH/OpenSSH/Keys
 
 The goal of this level is to connect via **SSH** to the next level, were we will be able to read the password.  
 
