@@ -4,8 +4,8 @@ title = "lafx0"
 theme = "hugo-coder"
 
 [params]
-    author = "Sulejman Bijedic"
-    info = "Penetration Tester, eCPPT"
+    author = "lafx0"
+    info = "Penetration Tester, eCPPT | eWPT"
     description = "Write-ups about Linux and Security"
     keywords = "blog,security,linux"
     avatarurl = "images/avatar_profile.jpg"
