@@ -4,7 +4,7 @@ title = "lafx0"
 theme = "hugo-coder"
 
 [params]
-    author = "lafx0"
+    author = ""
     info = "Penetration Tester, eCPPT | eWPT"
     description = "Write-ups about Linux and Security"
     keywords = "blog,security,linux"
