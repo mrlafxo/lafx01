@@ -41,16 +41,10 @@ theme = "hugo-coder"
     name = "Github"
     icon = "fab fa-github fa-2x"
     weight = 1
-    url = "https://github.com/mrlafxo/"
+    url = "https://github.com/lafx0"
 
 [[params.social]]
     name = "Twitter"
     icon = "fab fa-twitter fa-2x"
     weight = 3
-    url = "https://twitter.com/lafx01/"
-
-[[params.social]]
-    name = "LinkedIn"
-    icon = "fab fa-linkedin fa-2x"
-    weight = 3
-    url = "https://www.linkedin.com/in/sulejmanbijedic/"
+    url = "https://twitter.com/lafx02/"
