@@ -1,22 +1,19 @@
 baseURL = ""
 languageCode = "en-us"
-title = "lafx0"
-theme = "hugo-coder"
+title = "Security notes & write-ups"
+theme = "hugo-theme-hello-friend-ng"
+paginate = 10
 
 [params]
-    author = ""
+    author = "lafx0"
     info = "Penetration Tester, eCPPT | eWPT"
-    description = "Write-ups about Linux and Security"
-    keywords = "blog,security,linux"
-    avatarurl = "images/avatar_profile.jpg"
+    keywords = "blog,security,linux, ctf"
+    defaultTheme = "dark"
 
-    favicon_32 = "/img/favicon-32x32.png"
-    favicon_16 = "/img/favicon-16x16.png"
+    homeSubtitle = "A simple blog to use as a cybersec reference"
 
-    footercontent = "'  '"
-
-    hidecredits = true
-    hidecopyright = true
+    disableReadOtherPosts = false
+    enableSharingButtons = false
 
     rtl = false
 
@@ -24,13 +21,15 @@ theme = "hugo-coder"
     custom_css = ["css/custom.css"]
 
 
-
     # Menu links
 [[menu.main]]
+    identifier = "blog"
     name = "Blog"
     weight = 1
     url  = "/posts/"
+    
 [[menu.main]]
+    identifier = "about"
     name = "About"
     weight = 2
     url = "/about/info/"

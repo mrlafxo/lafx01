@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Level 4 -&gt; Level 5"/>
+<meta name="twitter:description" content="Level Goal
+The password for the next level is stored in the only human-readable file in the inhere directory. Tip: if your terminal is messed up, try the “reset” command.
+Solution We can solve this level in three ways:
+ With the file command:  Short Lesson
+ The file command is used to determine the type of a file. File type may be of human-readable (e.g. ‘ASCII text’) or MIME type(e."/>
+
+    <meta property="og:title" content="Level 4 -&gt; Level 5" />
+<meta property="og:description" content="Level Goal
+The password for the next level is stored in the only human-readable file in the inhere directory. Tip: if your terminal is messed up, try the “reset” command.
+Solution We can solve this level in three ways:
+ With the file command:  Short Lesson
+ The file command is used to determine the type of a file. File type may be of human-readable (e.g. ‘ASCII text’) or MIME type(e." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/overthewire/level05/" />
+<meta property="article:published_time" content="2020-05-06T17:26:01+02:00" />
+<meta property="article:modified_time" content="2020-05-06T17:26:01+02:00" />
+
+
+    
+      <base href="/posts/overthewire/level05/">
+    
+    <title>
+  Level 4 -&gt; Level 5 · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/overthewire/level05/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Level 4 -&gt; Level 5</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-05-06T17:26:01&#43;02:00'>
+                May 6, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <p><strong>Level Goal</strong></p>
+<p>The password for the next level is stored in the only human-readable file in the <strong>inhere</strong> directory.
+Tip: if your terminal is messed up, try the “reset” command.</p>
+<h2 id="solution-">Solution</h2>
+<p>We can solve this level in three ways:</p>
+<ol>
+<li>With the <strong>file</strong> command:</li>
+</ol>
+<p><strong>Short Lesson</strong></p>
+<blockquote>
+<p>The <strong>file</strong> command is used to determine the type of a file. File type may be of human-readable (e.g. ‘ASCII text’) or MIME type(e.g. ‘text/plain; charset=us-ascii’). This command tests each argument in an attempt to categorize it.</p>
+</blockquote>
+<p>We can pass every filename in the inhere directory to the file command and search for the one that is human-readable:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ ls
+-file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
+bandit4@bandit:~/inhere$ file ./-file00
+./-file00: data
+bandit4@bandit:~/inhere$ file ./-file01
+./-file01: data
+bandit4@bandit:~/inhere$ file ./-file02
+./-file02: data
+bandit4@bandit:~/inhere$ file ./-file03
+./-file03: data
+bandit4@bandit:~/inhere$ file ./-file04
+./-file04: data
+bandit4@bandit:~/inhere$ file ./-file05
+./-file05: data
+bandit4@bandit:~/inhere$ file ./-file06
+./-file06: data
+bandit4@bandit:~/inhere$ file ./-file07
+./-file07: ASCII text</code></pre></div>
+<p>The <strong>file07</strong> appears to be the one we were searching for:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ cat ./-file07
+koReBOKuIDDepwhWk7jZC0RTdopnAYKh</code></pre></div>
+<ol start="2">
+<li>Like the first solution, using the <strong>file</strong> command but more efficiently:</li>
+</ol>
+<p>The * character is used as a <strong>wildcard</strong> and it substitutes everyting that is in the current directory.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ file ./*
+./-file00: data
+./-file01: data
+./-file02: data
+./-file03: data
+./-file04: data
+./-file05: data
+./-file06: data
+./-file07: ASCII text
+./-file08: data
+./-file09: data</code></pre></div>
+<ol start="3">
+<li>With a more elegant method, combining the <strong>type</strong> and the <strong>file</strong> command:</li>
+</ol>
+<p><strong>Short Lesson</strong></p>
+<blockquote>
+<p>Xargs is a great command that reads streams of data from standard input, then generates and executes command lines; meaning it can take output of a command and passes it as argument of another command. If no command is specified, xargs executes echo by default.</p>
+</blockquote>
+<p>First we &lsquo;search&rsquo; all the file in the current directory, then we pass the output to the <strong>file</strong> command via <strong>xargs</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ find . -type f | xargs file
+./-file01: data
+./-file00: data
+./-file06: data
+./-file03: data
+./-file05: data
+./-file08: data
+./-file04: data
+./-file07: ASCII text
+./-file02: data
+./-file09: data</code></pre></div>
+<p>Here is the password again:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit4@bandit:~/inhere$ cat ./-file07
+koReBOKuIDDepwhWk7jZC0RTdopnAYKh</code></pre></div>
+<p> </p>
+<p>We successfully found the password for <strong>Level 5</strong> !</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Level 7 -&gt; Level 8"/>
+<meta name="twitter:description" content="Level Goal
+The password for the next level is stored in the file data.txt next to the word millionth.
+Solution Short Lesson
+ The grep command is used to search text. It searches the given file for lines containing a match to the given strings or words. It is one of the most useful commands on Linux and Unix-like system.
+ The given file is composed by a hundreds of lines containing a word followed by a password."/>
+
+    <meta property="og:title" content="Level 7 -&gt; Level 8" />
+<meta property="og:description" content="Level Goal
+The password for the next level is stored in the file data.txt next to the word millionth.
+Solution Short Lesson
+ The grep command is used to search text. It searches the given file for lines containing a match to the given strings or words. It is one of the most useful commands on Linux and Unix-like system.
+ The given file is composed by a hundreds of lines containing a word followed by a password." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/overthewire/level08/" />
+<meta property="article:published_time" content="2020-05-06T17:26:01+02:00" />
+<meta property="article:modified_time" content="2020-05-06T17:26:01+02:00" />
+
+
+    
+      <base href="/posts/overthewire/level08/">
+    
+    <title>
+  Level 7 -&gt; Level 8 · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/overthewire/level08/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Level 7 -&gt; Level 8</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-05-06T17:26:01&#43;02:00'>
+                May 6, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              1-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <p><strong>Level Goal</strong></p>
+<p>The password for the next level is stored in the file <strong>data.txt</strong> next to the word <strong>millionth</strong>.</p>
+<h2 id="solution-">Solution</h2>
+<p><strong>Short Lesson</strong></p>
+<blockquote>
+<p>The <strong>grep</strong> command is used to search text. It searches the given file for lines containing a match to the given strings or words. It is one of the most useful commands on Linux and Unix-like system.</p>
+</blockquote>
+<p>The given file is composed by a hundreds of lines containing a word followed by a password. The password we are searching for stands next to the world &ldquo;millionth&rdquo;. We can solve this level piping the content of the file with the <strong>grep</strong> command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit7@bandit:~$ cat data.txt | grep millionth
+millionth	cvX2JJa4CFALtqS87jk27qwqGhBM9plV</code></pre></div>
+<p> </p>
+<p>We successfully found the password for <strong>Level 8</strong> !</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

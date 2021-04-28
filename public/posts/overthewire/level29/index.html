@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="Write-ups about Linux and Security">
+    <meta name="keywords" content="blog,security,linux">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Level 28 -&gt; Level 29"/>
+<meta name="twitter:description" content="Level Goal
+There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+Solution Let&rsquo;s create a directory with write permissions and clone the repo:
+bandit28@bandit:~$ mkdir /tmp/git_level29 bandit28@bandit:~$ cd /tmp/git_level29 bandit28@bandit:/tmp/git_level29$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo Under the repo directory there is a README file:
+bandit28@bandit:/tmp/git_level29/repo$ cat README.md # Bandit Notes Some notes for level29 of bandit. ## credentials - username: bandit29 - password: xxxxxxxxxx One useful git command is log, that show the commit logs."/>
+
+    <meta property="og:title" content="Level 28 -&gt; Level 29" />
+<meta property="og:description" content="Level Goal
+There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+Solution Let&rsquo;s create a directory with write permissions and clone the repo:
+bandit28@bandit:~$ mkdir /tmp/git_level29 bandit28@bandit:~$ cd /tmp/git_level29 bandit28@bandit:/tmp/git_level29$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo Under the repo directory there is a README file:
+bandit28@bandit:/tmp/git_level29/repo$ cat README.md # Bandit Notes Some notes for level29 of bandit. ## credentials - username: bandit29 - password: xxxxxxxxxx One useful git command is log, that show the commit logs." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/overthewire/level29/" />
+<meta property="article:published_time" content="2020-05-06T17:26:01+02:00" />
+<meta property="article:modified_time" content="2020-05-06T17:26:01+02:00" />
+
+
+    
+      <base href="/posts/overthewire/level29/">
+    
+    <title>
+  Level 28 -&gt; Level 29 · lafx0
+</title>
+
+    
+      <link rel="canonical" href="/posts/overthewire/level29/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="/css/custom.css" />
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.66.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      lafx0
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/info/">About</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Level 28 -&gt; Level 29</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-05-06T17:26:01&#43;02:00'>
+                May 6, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              1-minute read
+            </span>
+          </div>
+          
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <p><strong>Level Goal</strong></p>
+<p>There is a <strong>git</strong> repository at <strong>ssh://bandit28-git@localhost/home/bandit28-git/repo</strong>. The password for the user bandit28-git is the same as for the user bandit28.</p>
+<h2 id="solution-">Solution</h2>
+<p>Let&rsquo;s create a directory with write permissions and clone the repo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit28@bandit:~$ mkdir /tmp/git_level29
+bandit28@bandit:~$ cd /tmp/git_level29
+bandit28@bandit:/tmp/git_level29$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo</code></pre></div>
+<p>Under the <code>repo</code> directory there is a <code>README</code> file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/git_level29/repo$ cat README.md
+<span style="color:#75715e"># Bandit Notes</span>
+Some notes <span style="color:#66d9ef">for</span> level29 of bandit.
+
+<span style="color:#75715e">## credentials</span>
+
+- username: bandit29
+- password: xxxxxxxxxx</code></pre></div>
+<p>One useful git command is <strong>log</strong>, that show the commit logs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/git_level29/repo$ git log
+commit edd935d60906b33f0619605abd1689808ccdd5ee
+Author: Morla Porla &lt;morla@overthewire.org&gt;
+Date:   Thu May <span style="color:#ae81ff">7</span> 20:14:49 <span style="color:#ae81ff">2020</span> +0200
+
+    fix info leak
+
+commit c086d11a00c0648d095d04c089786efef5e01264
+Author: Morla Porla &lt;morla@overthewire.org&gt;
+Date:   Thu May <span style="color:#ae81ff">7</span> 20:14:49 <span style="color:#ae81ff">2020</span> +0200
+
+    add missing data
+
+commit de2ebe2d5fd1598cd547f4d56247e053be3fdc38
+Author: Ben Dover &lt;noone@overthewire.org&gt;
+Date:   Thu May <span style="color:#ae81ff">7</span> 20:14:49 <span style="color:#ae81ff">2020</span> +0200
+
+    initial commit of README.md</code></pre></div>
+<p>There is a commit before the last one that we can check with the <strong>checkout</strong> command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/git_level29/repo$ git checkout c086d11a00c0648d095d04c089786efef5e01264</code></pre></div>
+<p>Opening the <code>README</code> file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bandit28@bandit:/tmp/git_level29/repo$ cat README.md
+<span style="color:#75715e"># Bandit Notes</span>
+Some notes <span style="color:#66d9ef">for</span> level29 of bandit.
+
+<span style="color:#75715e">## credentials</span>
+
+- username: bandit29
+- password: bbc96594b4e001778eee9975372716b2</code></pre></div>
+<p> </p>
+<p>We successfully found the password for <strong>Level 29</strong> !</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>'  '</p>
+    
+    
+    
+    
+  </section>
+</footer>
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>
