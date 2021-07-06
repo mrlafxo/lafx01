@@ -2,48 +2,65 @@ baseURL = ""
 languageCode = "en-us"
 title = "Security notes & write-ups"
 theme = "hugo-theme-hello-friend-ng"
+
+PygmentsCodeFences = false
+PygmentsStyle = "monokai"
+
+enableGitInfo   = false
+enableEmoji     = true
 paginate = 10
 
+[author]
+  name = "lafx0"
+
+[taxonomies]
+  tag      = "tags"
+  category = "categories"
+  series   = "series"
+
 [params]
-    author = "lafx0"
-    info = "Penetration Tester, eCPPT | eWPT"
-    keywords = "blog,security,linux, ctf"
-    defaultTheme = "dark"
 
-    homeSubtitle = "A simple blog to use as a cybersec reference"
+  homeSubtitle = "A simple blog to use as a personal reference"
 
-    disableReadOtherPosts = false
-    enableSharingButtons = false
+  disableReadOtherPosts = false
+  enableSharingButtons = false
 
-    rtl = false
+  enableThemeToggle = true
 
-    math = true
-    custom_css = ["css/custom.css"]
+  rtl = false
 
+  math = true
+  custom_css = ["css/custom.css"]
 
-    # Menu links
+[params.logo]
+  logoMark     = ">"
+  logoText     = "lafx0"
+  logoHomeLink = "/"
+  # Set to a valid CSS color to change the cursor in the logo.
+  logoCursorColor    = "#ff531a"
+  # Set to a valid CSS time value to change the animation duration, "0s" to disable.
+  logoCursorAnimate  = "2s"
+
+#Main Menu
+[menu]
 [[menu.main]]
-    identifier = "blog"
-    name = "Blog"
-    weight = 1
-    url  = "/posts/"
-    
+  identifier = "blog"
+  name = "Blog"
+  weight = 1
+  url  = "/posts/"
+
 [[menu.main]]
-    identifier = "about"
-    name = "About"
-    weight = 2
-    url = "/about/info/"
+  identifier = "about"
+  name = "About"
+  weight = 2
+  url = "/about/info/"
 
 
-    # Social links
+# Social links
 [[params.social]]
-    name = "Github"
-    icon = "fab fa-github fa-2x"
-    weight = 1
-    url = "https://github.com/lafx0"
+  name = "twitter"
+  url  = "https://twitter.com/lafx02/"
 
 [[params.social]]
-    name = "Twitter"
-    icon = "fab fa-twitter fa-2x"
-    weight = 3
-    url = "https://twitter.com/lafx02/"
+  name = "github"
+  url  = "https://github.com/lafx0"

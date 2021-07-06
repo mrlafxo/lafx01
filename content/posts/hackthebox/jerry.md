@@ -49,13 +49,13 @@ Visiting the resource on `10.10.10.95:8080` I am presented with an Apache Tomcat
 
 ***What is Apache Tomcat?***
 
->Apache Tomcat (sometimes simply "Tomcat") is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and WebSocket technologies.[3] Tomcat provides a "pure Java" HTTP web server environment in which Java code can run.
+>Apache Tomcat (sometimes simply "Tomcat") is an open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and WebSocket technologies. Tomcat provides a "pure Java" HTTP web server environment in which Java code can run.
 
 >Tomcat is developed and maintained by an open community of developers under the auspices of the Apache Software Foundation, released under the Apache License 2.0 license.
 
 Entering the control panel I could be able to upload a custom malicious application to the server acting as a reverse shell. I know that in the case of Tomcat I will need a **.war** file.
 
->In software engineering, a WAR file (Web Application Resource[1] or Web application Archive[2]) is a file used to distribute a collection of JAR-files, JavaServer Pages, Java Servlets, Java classes, XML files, tag libraries, static web pages (HTML and related files) and other resources that together constitute a web application.
+>In software engineering, a WAR file (Web Application Resource or Web application Archive) is a file used to distribute a collection of JAR-files, JavaServer Pages, Java Servlets, Java classes, XML files, tag libraries, static web pages (HTML and related files) and other resources that together constitute a web application.
 
 # Exploitation
 
