@@ -158,9 +158,9 @@ unsigned char shellcode[] =
 ```
 
 Where:
-- `-p` specifies the payload I want to use
-- `LHOST` and `LPORT` are the IP address assigned to my machine
-- `EXITFUNC` will be useful in some cases where after you exploited a box, you need a clean exit
+- `-p` specifies the payload we want to use
+- `LHOST` and `LPORT` are the IP address assigned to our machine
+- `EXITFUNC` will be useful in some cases where after we exploited a box, we need a clean exit
 - `-b` specifies the bad characters for the payload
 - `-f` specifies the output, in this case it will be `C`
 - `-a` specifies the system architecture
@@ -226,7 +226,7 @@ whoami
 operable program or batch file.
 ```
 
-Kali has a `whoami.exe` by default under `/usr/share/windows-resources/binaries`/. we can share the executable with the target machine via SMB:
+Kali has a `whoami.exe` by default under `/usr/share/windows-resources/binaries`/. We can share the executable with the target machine via SMB:
 
 ```
 python3 /opt/impacket/examples/smbserver.py whoami /usr/share/windows-binaries/
@@ -239,6 +239,8 @@ Impacket v0.9.19 - Copyright 2018 SecureAuth Corporation
 [*] Config file parsed
 [*] Config file parsed
 ```
+
+Where `whoami` is the share name and `/usr/share/windows-binaries/` its path.
 
 On the target:
 
