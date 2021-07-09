@@ -226,7 +226,7 @@ whoami
 operable program or batch file.
 ```
 
-Kali has a `whoami.exe` by default under `/usr/share/windows-resources/binaries`/. We can share the executable with the target machine via SMB:
+Kali has a `whoami.exe` by default under `/usr/share/windows-resources/binaries`. We can share the executable with the target machine via SMB:
 
 ```
 python3 /opt/impacket/examples/smbserver.py whoami /usr/share/windows-binaries/
