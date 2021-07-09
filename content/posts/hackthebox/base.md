@@ -1,6 +1,6 @@
 +++
-draft = false
-date = 2025-06-25T16:04:02+01:00
+draft = true
+date = 2020-06-28T16:04:02+01:00
 title = ""
 description = ""
 slug = ""
@@ -8,29 +8,39 @@ tags = []
 categories = []
 externalLink = ""
 series = []
-weight = 2
+weight = 0
 +++
-
 
 # Machine info
 
 - OS :
-- Difficulty : Easy
-- Points : 20
-- IP : 10.10.10.
-
+- Difficulty :
+- Points :
+- IP :
 
 # Mind Map
-![_MindMap](/images/htb/_mindmap.png)
+![Legacy_MindMap](/images/htb/legacy_mindmap.png)
+
+&nbsp;
+
+# Recon
+
+Let's see the `nmap` scan result:
+
+```
+
+```
 
 
-# Reconnaisance
+&nbsp;
 
 # Enumeration
+
+
+&nbsp;
 
 # Exploitation
 
 
-# Privilege Escalation
 
-## Lessons learned and remediations
+**Note**: flags are under `C:\Documents and Setting\john` and `C:\Documents and Setting\Administrator`.

