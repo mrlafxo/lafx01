@@ -20,7 +20,7 @@ paginate = 10
 
 [params]
 
-  homeSubtitle = "A simple blog to use as a personal reference"
+  homeSubtitle = "A simple blog to use as a reference"
 
   disableReadOtherPosts = false
   enableSharingButtons = false
