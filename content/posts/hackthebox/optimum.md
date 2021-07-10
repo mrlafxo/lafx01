@@ -79,13 +79,13 @@ The only open port is the `80`.
 
 # Enumeration
 
-Visiting port 80 we are presented with a web page about an HFS Http File Server. 
+Visiting port `80` we are presented with a web page about an HFS Http File Server. 
 
 ![Legacy_MindMap](/images/htb/legacy_mindmap.png)
 
 It is easy to identify its version, which appears to be the `2.3`.
 
-Searching on the web informations about that version, we can identify an RCE exploit available:
+Searching on the web informations about that version, we can identify an RCE exploit available
 -> <https://www.exploit-db.com/exploits/49584>
 
 We just need to change our attacking IP and port where we want to receive the reverse shell. 
