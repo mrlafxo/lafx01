@@ -19,6 +19,7 @@ weight = 0
 - IP :
 
 # Mind Map
+
 ![Legacy_MindMap](/images/htb/legacy_mindmap.png)
 
 &nbsp;

@@ -19,6 +19,7 @@ weight = 0
 - IP : 10.10.10.8
 
 # Mind Map
+
 ![Optimum_MindMap](/images/htb/optimum_mindmap.png)
 
 &nbsp;
@@ -72,14 +73,14 @@ HOP RTT      ADDRESS
 2   55.63 ms 10.10.10.8
 ```
 
-The only open port is the `80`. 
+The only open port is the `80`.
 
 
 &nbsp;
 
 # Enumeration
 
-Visiting port `80` we are presented with a web page about an HFS Http File Server. 
+Visiting port `80` we are presented with a web page about an HFS Http File Server.
 
 ![Legacy_MindMap](/images/htb/legacy_mindmap.png)
 
@@ -88,7 +89,7 @@ It is easy to identify its version, which appears to be the `2.3`.
 Searching on the web informations about that version, we can identify an RCE exploit available
 -> <https://www.exploit-db.com/exploits/49584>
 
-We just need to change our attacking IP and port where we want to receive the reverse shell. 
+We just need to change our attacking IP and port where we want to receive the reverse shell.
 
 
 &nbsp;
@@ -131,9 +132,9 @@ PS C:\Users\kostas\Desktop>
 
 # Privilege Escalation
 
-Now that we have a basic shell on the target, we can start identifying paths to gain SYSTEM privileges. Watson can be a good choice to proceeed, but as this machine is very old, we will use Sherlock, its predecessor. 
+Now that we have a basic shell on the target, we can start identifying paths to gain SYSTEM privileges. Watson can be a good choice to proceeed, but as this machine is very old, we will use Sherlock, its predecessor.
 
-First of all we have to define in the script what functions we want to call. For that, we will add `Find-AllVulns` at the bottom of the script. 
+First of all we have to define in the script what functions we want to call. For that, we will add `Find-AllVulns` at the bottom of the script.
 
 We can then share the script via a Python server and launch it on the target machine:
 
@@ -222,13 +223,13 @@ Link       : https://aspe1337.blogspot.co.uk/2017/04/writeup-of-cve-2017-7199.ht
 VulnStatus : Not Vulnerable
 ```
 
-From the output, the machine appears to be vulnerable to `MS16-032`, `MS16-034`, `MS16-135`. 
+From the output, the machine appears to be vulnerable to `MS16-032`, `MS16-034`, `MS16-135`.
 
-Online we can find different exploits for `MS16-032`, but most of them will not work as we do not have a fully interactive shell on the target. In order to have a working script and exploit, we must use the one that comes with the Empire project. 
+Online we can find different exploits for `MS16-032`, but most of them will not work as we do not have a fully interactive shell on the target. In order to have a working script and exploit, we must use the one that comes with the Empire project.
 
 <https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/privesc/Invoke-MS16032.ps1>
 
-**Note**: The exploit we will try to execute is intended for `64bit` machines. Our current shell runs on a `32bit` process probably becuse the HFS server is a `32bit` process, so first we have to obtain a valid `64bit` shell. 
+**Note**: The exploit we will try to execute is intended for `64bit` machines. Our current shell runs on a `32bit` process probably becuse the HFS server is a `32bit` process, so first we have to obtain a valid `64bit` shell.
 
 To check the environment, we can use the following command:
 
@@ -291,9 +292,9 @@ PS C:\Users\kostas\Desktop> [Environment]::Is64BitProcess
 True
 ```
 
-Now we can proceed with our SYSTEM exploit. 
+Now we can proceed with our SYSTEM exploit.
 
-We will use the `Invoke-MS16-032.ps1` exploit script from the Empire project and the `rev.ps1` script again. The first one is the actual exploit file, where we can specify what action or command we want to achieve. The second one is the shell we want to obtain, that in this case will be a SYSTEM one. 
+We will use the `Invoke-MS16-032.ps1` exploit script from the Empire project and the `rev.ps1` script again. The first one is the actual exploit file, where we can specify what action or command we want to achieve. The second one is the shell we want to obtain, that in this case will be a SYSTEM one.
 
 This time, we will replace the instruction at the bottom of `rev.ps1` in order to specify the port where we want our SYSTEM reverse shell:
 
