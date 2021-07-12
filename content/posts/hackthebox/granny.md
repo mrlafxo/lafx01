@@ -66,7 +66,7 @@ U1(R=N)
 IE(R=Y%DFI=S%TG=80%CD=Z)
 ```
 
-From the `nmap` scan we can also see how there are some unusual HTTP methods available. `PUT` and `MOVE` are really interesting, and we will see that abusing them we will obtain a reverse shell. 
+From the `nmap` scan we can also see how there are some unusual HTTP methods available. `PUT` and `MOVE` are really interesting, and abusing them we can obtain a reverse shell. 
 
 Also, only port `80` is open!
 
@@ -77,11 +77,11 @@ Also, only port `80` is open!
 
 # Enumeration
 
-From the nmap output we can see that WebDAV is enabled. There is one tool named `davtest` that is very helpful in these scenarios. 
+From the `nmap` output we can see that WebDAV is enabled. There is one tool named `davtest` that is very helpful in these scenarios. The tool will try to upload and execute files with different extensions and will output which failed and which succedeed.
 
 Let's run it against our target machine:
 
-**Tip**: In order to see what kind of requests the tool is performing, we can intercept them with Burp. 
+**Tip**: In order to see what kind of requests the tool is performing, we can intercept them with Burp with requests redirections, as the tool does not have a proxy option.
 
 ```
 $ davtest -url http://10.10.10.15 
