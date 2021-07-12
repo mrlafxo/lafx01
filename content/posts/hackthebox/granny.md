@@ -66,7 +66,7 @@ U1(R=N)
 IE(R=Y%DFI=S%TG=80%CD=Z)
 ```
 
-From the `nmap` scan we can also see how there are some unusual HTTP methods available.
+From the `nmap` scan we can also see how there are some unusual HTTP methods available. `PUT` and `MOVE` are really interesting, and we will see that abusing them we will obtain a reverse shell. 
 
 Also, only port `80` is open!
 
@@ -77,7 +77,66 @@ Also, only port `80` is open!
 
 # Enumeration
 
-The version of the HTTP Server appears to be `Microsoft IIS httpd 6.0`. Conducting a simple research on the web, we can identify an exploit available for that version, which appears to be vulnerable to `CVE-2017-7269`.
+From the nmap output we can see that WebDAV is enabled. There is one tool named `davtest` that is very helpful in these scenarios. 
+
+Let's run it against our target machine:
+
+**Tip**: In order to see what kind of requests the tool is performing, we can intercept them with Burp. 
+
+```
+$ davtest -url http://10.10.10.15 
+********************************************************
+ Testing DAV connection
+OPEN            SUCCEED:                http://10.10.10.15
+********************************************************
+NOTE    Random string for this session: l4pEhHn3zPp1r
+********************************************************
+ Creating directory
+MKCOL           SUCCEED:                Created http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r
+********************************************************
+ Sending test files
+PUT     html    SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.html
+PUT     aspx    FAIL
+PUT     pl      SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.pl
+PUT     cfm     SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.cfm
+PUT     cgi     FAIL
+PUT     php     SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.php
+PUT     jhtml   SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.jhtml
+PUT     shtml   FAIL
+PUT     jsp     SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.jsp
+PUT     asp     FAIL
+PUT     txt     SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.txt
+********************************************************
+ Checking for test file execution
+EXEC    html    SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.html
+EXEC    pl      FAIL
+EXEC    cfm     FAIL                                                                          
+EXEC    php     FAIL                                                                          
+EXEC    jhtml   FAIL                                                                          
+EXEC    jsp     FAIL                                                                          
+EXEC    txt     SUCCEED:        http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.txt                                                                                       
+                                                                                              
+********************************************************                                      
+/usr/bin/davtest Summary:                                                                     
+Created: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r                                          
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.html              
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.pl                
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.cfm               
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.php               
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.jhtml             
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.jsp               
+PUT File: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.txt               
+Executes: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.html              
+Executes: http://10.10.10.15/DavTestDir_l4pEhHn3zPp1r/davtest_l4pEhHn3zPp1r.txt
+```
+The output informs us that we cannot PUT `asp` or `aspx` files on the machine, which is something we could abuse, as this is a Windows machine and being able to upload and execute files means rev-shell!
+
+But we can upload `txt` files, that are being executed. So we can first upload a `txt` file containing an `aspx` web shell (created via `msfvenom`). The file will not be executed but we will able to `MOVE` it to a destination, specifying a `Destination` header. In our case, the destination will be an `aspx` file, that once executed will connect to our shell handler. 
+
+To see this technique in action -> 
+<https://www.youtube.com/watch?v=ZfPVGJGkORQ>
+
+Another way of obtaining a rev-shell is by identifying the version of the HTTP Server, that appears to be `Microsoft IIS httpd 6.0`. Conducting a simple research on the web, we can identify an exploit available for that version, which appears to be vulnerable to `CVE-2017-7269`.
 
 The vulnerability is about a Buffer Overflow due to an improper validation of an 'IF' header in a `PROPFIND` request. A remote attacker could exploit this vulnerability in the `IIS WebDAV Component` with a crafted request using the `PROPFIND` method. Successful exploitation could result in denial of service condition or  arbitrary code execution in the context of the user running the application.
 Web Distributed Authoring and Versioning (WebDAV) is an extension of the HTTP protocol that allows clients to perform remote Web content authoring operations. WebDAV extends the set of standard HTTP methods and headers allowed for the HTTP request.
