@@ -67,6 +67,8 @@ IE(R=Y%DFI=S%TG=80%CD=Z)
 ```
 Only port `80` is open!
 
+From the `nmap` scan we can also see how there are some unusual HTTP methods available.
+
 
 &nbsp;
 
