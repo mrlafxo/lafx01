@@ -65,9 +65,12 @@ T4(R=Y%DF=N%TG=80%W=0%S=A%A=O%F=R%O=%RD=0%Q=)
 U1(R=N)
 IE(R=Y%DFI=S%TG=80%CD=Z)
 ```
-Only port `80` is open!
 
 From the `nmap` scan we can also see how there are some unusual HTTP methods available.
+
+Also, only port `80` is open!
+
+![Granny_Website](/images/htb/granny_website.png)
 
 
 &nbsp;
