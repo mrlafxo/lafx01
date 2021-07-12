@@ -109,7 +109,7 @@ whoami
 nt authority\network service
 ```
 
-Once we are in the machine, it is useful to conduct a further enumeration. 
+Once we are in the machine, it is useful to conduct a further enumeration.
 Inside the `Documents and Settings` folder, there is a hint about a possible `Lakis` user:
 
 ```
@@ -132,7 +132,7 @@ C:\Documents and Settings>cd Lakis
 cd Lakis
 Access is denied.
 ```
-The folder is not accessible. In order to get the user flag we have to escalate privileges. 
+The folder is not accessible. In order to get the user flag we have to escalate privileges.
 
 &nbsp;
 
@@ -178,7 +178,6 @@ Hotfix(s):                 1 Hotfix(s) Installed.
                            [01]: Q147222
 Network Card(s):           N/A
 ```
-
 
 At this point we can use the `Windows Exploit Suggester`:
 
